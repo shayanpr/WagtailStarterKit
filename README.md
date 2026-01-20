@@ -2,6 +2,8 @@
 
 A professional, production-ready boilerplate for building portfolio websites with **Wagtail CMS** and **Tailwind CSS**.
 
+AI has been used in making of this project.
+
 ## Features
 *   **Modular Architecture:** Separate apps for Landing Page (`home`) and Portfolio (`portfolio`).
 *   **Dynamic Layouts:** StreamField-based page construction.

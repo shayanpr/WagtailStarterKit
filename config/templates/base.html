@@ -1,0 +1,62 @@
+{% load static wagtailcore_tags wagtailuserbar  wagtailsettings_tags%}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block title %}
+        {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+        {% endblock %}
+        {% block title_suffix %}
+        {% wagtail_site as current_site %}
+        {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+        {% endblock %}
+    </title>
+    {% if page.search_description %}
+    <meta name="description" content="{{ page.search_description }}" />
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {# Force all links in the live preview panel to be opened in a new tab #}
+    {% if request.in_preview_panel %}
+    <base target="_blank">
+    {% endif %}
+
+    <script src="https://cdn.tailwindcss.com/?plugins=typography"></script>
+    {% block extra_css %}
+    {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %} font-sans antialiased text-gray-900">
+    {% wagtailuserbar %}
+
+    {% get_settings %}
+    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center ">
+            <a href="/" class="text-xl font-bold tracking-tighter">{{ current_site.site_name| default:"PORTFOLIO"}}</a>
+            <ul class="flex gap-8">
+                {% for item in settings.home.NavigationSettings.menu_items %}
+                <li>
+                    <a href="{% if item.value.link_page %} {% pageurl item.value.link_page %}{% else %}{{ item.value.link_url }}{% endif %}"
+                        class="text-gray-600 hover:text-black font-medium transition-colors">
+                        {{item.value.title}}
+                    </a>
+                </li>
+                {% endfor %}
+
+            </ul>
+        </nav>
+
+    </header>
+    {% block content %}{% endblock %}
+
+
+    {% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+    {% endblock %}
+</body>
+
+</html>

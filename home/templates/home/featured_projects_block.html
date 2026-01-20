@@ -1,0 +1,58 @@
+{% load wagtailcore_tags wagtailimages_tags %} 
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+
+        {# Header #}
+        <div class="text-center mb-16">
+            {% if self.heading %}
+            <h2 class="text-4xl font-bold">
+            {{self.heading}}
+            </h2>
+            {%endif%}
+            {% if self.intro %}
+            <p class="text-gray-600">{{self.intro}}</p>
+            {%endif%}
+        </div>
+
+        {# Project Grid #}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {% for project in self.projects %}
+            {# 'project' is the Page object itself #}
+            <a href="{% pageurl project %}" class="group block bg-white">
+                {# Image #}
+                <div class="relative h-64 overflow-hidden bg-gray-200">
+                    {%if project.main_image %}
+                        {% image project.main_image fill-800x600 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" %}
+                    {% else %}
+                        <div class="flex item-center justify-center h-full text-gray-400">No Image</div>
+                    {%endif%}
+                </div>
+                {# Content #}
+                <div class="p-6">
+                    <div class="flex item-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase text-blue-600 tracking-wider">
+                            {{project.client| default:"Project"}}
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{{project.title}}</h3>
+                </div>
+            </a>
+
+            {%endfor%}
+        </div>
+        {# View All Linkes #}
+        <div class="text-center mt-12">
+            <a href="/work/" class="inline-flex items-center font-bold text-gray-900 hover:text-blue-600 transition-colors border-b-2 border-transparent hover:border-blue-600 pb-1">
+                View All Projects &rarr;
+            </a>
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+</section>

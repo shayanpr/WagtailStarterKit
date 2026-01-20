@@ -1,0 +1,22 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<section class="relative bg-gray-900 text-white py-32 overflow-hidden">
+    {# This seems like a comment. #}
+    <div class="absolute inset-0 z-0 opacity-50">
+        {% if self.image %}
+            {% image self.image fill-1920x1080 as bg_img %}
+            <img src="{{ bg_img.url }}" alt="{{bg_img.alt}}" class="w-full h-full object-cover">
+        {% endif %}
+    </div>
+
+    <div class="relative z-10 container mx-auto px-6 text-center">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+            {{self.title}}
+        </h1>
+        {% if self.subtitle %}
+            <p class="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto">
+                {{self.subtitle }}
+            </p>
+        {% endif %}
+    </div>
+</section>

@@ -1,3 +1,4 @@
+from tempfile import template
 from django.db import models
 from wagtail.models import Page
 from wagtail import blocks
@@ -142,3 +143,21 @@ class HomePage(Page):
     content_panels = Page.content_panels + [
         FieldPanel("body"),
     ]
+
+
+class FlexPage(Page):
+    body = StreamField(
+        [
+            ("hero", HeroBlock()),
+            ("about", AboutBlock()),
+            ("services", ServicesListBlock()),
+            ("showcase", FeaturedProjectsBlock()),
+            ("contact", ContactBlock()),
+        ],
+        use_json_field=True,
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel("body"),
+    ]
+    template = "home/home_page.html"

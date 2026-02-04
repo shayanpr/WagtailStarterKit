@@ -14,6 +14,14 @@ class ProjectIndexPage(Page):
 
     subpage_types = ["portfolio.ProjectPage"]
 
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        projects = (
+            ProjectPage.objects.child_of(self).live().specific().order_by("-date")
+        )
+        context["projects"] = projects
+        return context
+
 
 class ProjectPage(Page):
     client = models.CharField(max_length=200)

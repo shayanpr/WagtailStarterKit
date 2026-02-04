@@ -1,4 +1,3 @@
-from tempfile import template
 from django.db import models
 from wagtail.models import Page
 from wagtail import blocks
@@ -6,6 +5,16 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.fields import StreamField
 from wagtail.admin.panels import FieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
+
+
+class SocialLinkBlock(blocks.StructBlock):
+    platform_name = blocks.CharBlock(required=True, help_text="e.g. Telegram Channel")
+    url = blocks.URLBlock(required=True)
+    icon = ImageChooserBlock(required=False, help_text="Upload a logo/icon")
+
+    class Meta:
+        icon = "link"
+        label = "Custom Social Link"
 
 
 @register_setting
@@ -22,17 +31,66 @@ class SocialMediaSettings(BaseSiteSetting):
     twitter = models.URLField(
         blank=True, null=True, help_text="Enter your Twitter profile URL"
     )
-
+    whatsapp = models.CharField(
+        blank=True,
+        null=True,
+        max_length=50,
+        help_text="International format (e.g. +12345234567)",
+    )
+    telegram_username = models.CharField(
+        blank=True,
+        null=True,
+        max_length=100,
+        help_text="Your username without the @ (e.g. username)",
+    )
+    extra_links = StreamField(
+        [
+            ("social_link", SocialLinkBlock()),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
     panels = [
         FieldPanel("email"),
         FieldPanel("linkedin"),
         FieldPanel("github"),
         FieldPanel("twitter"),
+        FieldPanel("whatsapp"),
+        FieldPanel("telegram_username"),
+        FieldPanel("extra_links"),
     ]
 
     class Meta:
         verbose_name = "Social Media Settings"
         verbose_name_plural = "Social Media Settings"
+
+
+@register_setting
+class BrandingSettings(BaseSiteSetting):
+    logo = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Brand logo used in the navbar",
+    )
+    favicon = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+        help_text="Favicon used in the browser tab (recommended 32x32)",
+    )
+
+    panels = [
+        FieldPanel("logo"),
+        FieldPanel("favicon"),
+    ]
+
+    class Meta:
+        verbose_name = "Branding Settings"
 
 
 class MenuItem(blocks.StructBlock):
@@ -66,6 +124,9 @@ class ContactBlock(blocks.StructBlock):
         required=True, default="Get in Touch!", help_text="Contact Me"
     )
     text = blocks.TextBlock(required=False, default="Lets work together.")
+    illustration = ImageChooserBlock(
+        required=False, help_text="Side illustration image"
+    )
 
     class Meta:
         icon = "mail"
@@ -121,11 +182,31 @@ class FeaturedProjectsBlock(blocks.StructBlock):
     projects = blocks.ListBlock(
         blocks.PageChooserBlock(target_model="portfolio.ProjectPage", required=False)
     )
+    link_target = blocks.PageChooserBlock(requqired=False, help_text="Link to View All")
 
     class Meta:
         icon = "pick"
         label = "Featured Projects"
         template = "home/featured_projects_block.html"
+
+
+class ColumnBlock(blocks.StreamBlock):
+    heading = blocks.CharBlock(icon="title")
+    paragraph = blocks.RichTextBlock(icon="pilcrow")
+    image = ImageChooserBlock(icon="image")
+
+    class Meta:
+        label = "Columns Content"
+
+
+class GridBlock(blocks.StructBlock):
+    grid_title = blocks.CharBlock(required=False, help_text="Optional Section Heading.")
+    columns = blocks.ListBlock(ColumnBlock(), label="Columns", min_num=1, max_num=4)
+
+    class Meta:
+        icon = "table"
+        label = "Grid Section"
+        template = "home/grid_block.html"
 
 
 class HomePage(Page):
@@ -136,6 +217,7 @@ class HomePage(Page):
             ("services", ServicesListBlock()),
             ("showcase", FeaturedProjectsBlock()),
             ("contact", ContactBlock()),
+            ("grid", GridBlock()),
         ],
         use_json_field=True,
     )
@@ -153,6 +235,7 @@ class FlexPage(Page):
             ("services", ServicesListBlock()),
             ("showcase", FeaturedProjectsBlock()),
             ("contact", ContactBlock()),
+            ("grid", GridBlock()),
         ],
         use_json_field=True,
     )

@@ -1,4 +1,5 @@
 {% load static wagtailcore_tags wagtailuserbar  wagtailsettings_tags%}
+{% get_settings %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,6 +25,18 @@
     <base target="_blank">
     {% endif %}
 
+    {% with ga_id=settings.home.BrandingSettings.google_analytics_id %}
+        {% if ga_id %}
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_id }}"></script>
+            <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '{{ga_id}}');
+            </script>
+        {% endif %}
+    {% endwith %}
     <script src="https://cdn.tailwindcss.com/?plugins=typography"></script>
     {% block extra_css %}
     {# Override this in templates to add extra stylesheets #}
@@ -33,7 +46,6 @@
 <body class="{% block body_class %}{% endblock %} font-sans antialiased text-gray-900">
     {% wagtailuserbar %}
 
-    {% get_settings %}
     <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center ">
             <a href="/" class="text-xl font-bold tracking-tighter">{{ current_site.site_name| default:"PORTFOLIO"}}</a>

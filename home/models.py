@@ -84,9 +84,14 @@ class BrandingSettings(BaseSiteSetting):
         help_text="Favicon used in the browser tab (recommended 32x32)",
     )
 
+    google_analytics_id = models.CharField(
+        blank=True, null=True, max_length=50, help_text="Google Analytics ID"
+    )
+
     panels = [
         FieldPanel("logo"),
         FieldPanel("favicon"),
+        FieldPanel("google_analytics_id"),
     ]
 
     class Meta:
@@ -182,7 +187,7 @@ class FeaturedProjectsBlock(blocks.StructBlock):
     projects = blocks.ListBlock(
         blocks.PageChooserBlock(target_model="portfolio.ProjectPage", required=False)
     )
-    link_target = blocks.PageChooserBlock(requqired=False, help_text="Link to View All")
+    link_target = blocks.PageChooserBlock(required=False, help_text="Link to View All")
 
     class Meta:
         icon = "pick"

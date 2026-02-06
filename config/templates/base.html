@@ -77,6 +77,65 @@
     </header>
     {% block content %}{% endblock %}
 
+    {% block footer %}
+    <footer class="bg-gray-50 border-t border-gray-100 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                {# Branding/About Col #}
+                <div>
+                    <a href="/" class="text-xl font-bold tracking-tighter mb-4 block">
+                        {{ current_site.site_name| default:"PORTFOLIO"}}
+                    </a>
+                    <p class="text-gray-500 max-w-sm">
+                        Building professional digital experiences with Wagtail and Tailwind CSS.
+                    </p>
+                </div>
+
+                {# Contact/Email Col #}
+                <div>
+                    <h4 class="font-bold mb-4">Contact</h4>
+                    {% if settings.home.SocialMediaSettings.email %}
+                    <a href="mailto:{{ settings.home.SocialMediaSettings.email }}" class="text-gray-600 hover:text-black transition-colors">
+                        {{ settings.home.SocialMediaSettings.email }}
+                    </a>
+                    {% endif %}
+                </div>
+
+                {# Social Links Col #}
+                <div>
+                    <h4 class="font-bold mb-4">Follow Me</h4>
+                    <div class="flex flex-wrap gap-4">
+                        {% if settings.home.SocialMediaSettings.linkedin %}
+                            <a href="{{ settings.home.SocialMediaSettings.linkedin }}" class="text-gray-400 hover:text-blue-600 transition-colors" target="_blank">LinkedIn</a>
+                        {% endif %}
+                        {% if settings.home.SocialMediaSettings.github %}
+                            <a href="{{ settings.home.SocialMediaSettings.github }}" class="text-gray-400 hover:text-black transition-colors" target="_blank">GitHub</a>
+                        {% endif %}
+                        {% if settings.home.SocialMediaSettings.twitter %}
+                            <a href="{{ settings.home.SocialMediaSettings.twitter }}" class="text-gray-400 hover:text-blue-400 transition-colors" target="_blank">Twitter</a>
+                        {% endif %}
+                        
+                        {# Handle Extra Links StreamField #}
+                        {% for item in settings.home.SocialMediaSettings.extra_links %}
+                            <a href="{{ item.value.url }}" class="text-gray-400 hover:text-black transition-colors" target="_blank">
+                                {{ item.value.platform_name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:row justify-between items-center gap-4 text-sm text-gray-400">
+                <p>© {% now "Y" %} {{ current_site.site_name| default:"Portfolio" }}. All rights reserved.</p>
+                <div class="flex gap-6">
+                    {# These could also be managed via a separate Menu if desired #}
+                    <span>Built with Wagtail CMS</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    {% endblock %}
+
 
     {% block extra_js %}
     {# Override this in templates to add extra javascript #}

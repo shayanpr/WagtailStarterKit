@@ -140,4 +140,21 @@ EXTRA_SOCIAL_DATA = [
 NAV_DATA = [
     {"title": "Home", "target": "home"},
     {"title": "Work", "target": "work"},
+    {"title": "Contact", "target": "contact"},
+]
+CONTACT_PAGE_DATA = {
+    "title": "Contact Me",
+    "slug": "contact",
+    "intro": "<p>Have a project in mind? I'd love to hear from you. Fill out the form below and I'll get back to you as soon as possible.</p>",
+    "thank_you_text": "<p>Thanks for your message! I usually respond within 24 hours.</p>",
+    "from_address": "no-reply@janedoe.com",
+    "to_address": "jane@doe.com",
+    "subject": "New Portfolio Inquiry",
+}
+
+CONTACT_FORM_FIELDS = [
+    {"label": "Full Name", "field_type": "singleline", "required": True},
+    {"label": "Email Address", "field_type": "email", "required": True},
+    {"label": "Subject", "field_type": "singleline", "required": False},
+    {"label": "Message", "field_type": "multiline", "required": True},
 ]

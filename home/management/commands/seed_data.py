@@ -5,7 +5,7 @@ from django.core.files.base import ContentFile
 from django.core.files.images import ImageFile
 from wagtail.images.models import Image
 from wagtail.models import Page, Site
-from home.models import HomePage, SocialMediaSettings, NavigationSettings
+from home.models import HomePage, SocialMediaSettings, NavigationSettings, ContactPage, FormField
 from portfolio.models import ProjectIndexPage, ProjectPage
 from ..data.content_data import (
     JANE_DOE_HOME,
@@ -14,6 +14,8 @@ from ..data.content_data import (
     SOCIAL_DATA,
     NAV_DATA,
     EXTRA_SOCIAL_DATA,
+    CONTACT_PAGE_DATA,
+    CONTACT_FORM_FIELDS,
 )
 import datetime
 
@@ -106,6 +108,27 @@ class Command(BaseCommand):
         root.add_child(instance=home)
         home.add_child(instance=index)
 
+        # 4.5 Create Contact Page
+        contact_page = ContactPage(
+            title=CONTACT_PAGE_DATA["title"],
+            slug=CONTACT_PAGE_DATA["slug"],
+            intro=CONTACT_PAGE_DATA["intro"],
+            thank_you_text=CONTACT_PAGE_DATA["thank_you_text"],
+            from_address=CONTACT_PAGE_DATA["from_address"],
+            to_address=CONTACT_PAGE_DATA["to_address"],
+            subject=CONTACT_PAGE_DATA["subject"],
+        )
+        home.add_child(instance=contact_page)
+
+        # Add Form Fields to Contact Page
+        for field_data in CONTACT_FORM_FIELDS:
+            FormField.objects.create(
+                page=contact_page,
+                label=field_data["label"],
+                field_type=field_data["field_type"],
+                required=field_data["required"],
+            )
+
         # 5. Create Individual Project Pages
         for project_data in PROJECTS_DATA:
             url = project_data.pop("image_url", None)
@@ -158,7 +181,7 @@ class Command(BaseCommand):
         # 9. Seed Navigation Settings
         nav_settings = NavigationSettings.for_site(site)
         # Map targets to actual objects
-        target_map = {"home": home, "work": index}
+        target_map = {"home": home, "work": index, "contact": contact_page}
         menu_items = []
         for item in NAV_DATA:
             menu_items.append(
@@ -175,6 +198,7 @@ class Command(BaseCommand):
 
         # 10. Publish everything
         index.save_revision().publish()
+        contact_page.save_revision().publish()
         home.save_revision().publish()
 
         self.stdout.write(

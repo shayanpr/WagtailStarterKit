@@ -1,9 +1,41 @@
+from urllib import response
+import requests
 from django.core.management.base import BaseCommand
+from django.core.files.base import ContentFile
+from django.core.files.images import ImageFile
+from wagtail.images.models import Image
 from wagtail.models import Page, Site
 from home.models import HomePage, SocialMediaSettings, NavigationSettings
 from portfolio.models import ProjectIndexPage, ProjectPage
-from ..data.content_data import JANE_DOE_HOME, PROJECT_INDEX_DATA, PROJECTS_DATA, SOCIAL_DATA, NAV_DATA, EXTRA_SOCIAL_DATA
+from ..data.content_data import (
+    JANE_DOE_HOME,
+    PROJECT_INDEX_DATA,
+    PROJECTS_DATA,
+    SOCIAL_DATA,
+    NAV_DATA,
+    EXTRA_SOCIAL_DATA,
+)
 import datetime
+
+
+def get_image(url, title):
+    """
+    Downloads an image from a URL and saves it as a Wagtail Image object.
+    Returns the Image object or None if the download fails.
+    """
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            # Wrap the content in a Django ImageFile to ensure dimensions are read
+            file_name = f"{title.replace(' ', '_')}.jpg"
+            image_file = ImageFile(ContentFile(response.content), name=file_name)
+            
+            image = Image(title=title, file=image_file)
+            image.save()
+            return image
+    except Exception as e:
+        print(f"Error downloading image {url}: {e}")
+    return None
 
 
 class Command(BaseCommand):
@@ -31,6 +63,13 @@ class Command(BaseCommand):
         )
 
         # 4. Create the Home Page Instance
+        # Process Home Page Images
+        for block_type, block_value in JANE_DOE_HOME:
+            if "image_url" in block_value:
+                url = block_value.pop("image_url")
+                img_obj = get_image(url, f"Home_{block_type}")
+                block_value["image"] = img_obj
+
         home = HomePage(
             title="Jane Doe | Portfolio",
             slug="home",
@@ -41,6 +80,8 @@ class Command(BaseCommand):
 
         # 5. Create Individual Project Pages
         for project_data in PROJECTS_DATA:
+            url = project_data.pop("image_url", None)
+
             project = ProjectPage(
                 title=project_data["title"],
                 slug=project_data["slug"],
@@ -48,6 +89,10 @@ class Command(BaseCommand):
                 date=datetime.date.today(),
                 body=project_data["body"],
             )
+            # Handle Project Image
+            if url:
+                project.main_image = get_image(url, f"Project_{project_data['slug']}")
+
             index.add_child(instance=project)
             project.save_revision().publish()
 
@@ -56,7 +101,7 @@ class Command(BaseCommand):
             if block.block_type == "showcase":
                 block.value["link_target"] = index
                 block.value["projects"] = index.get_children().live()
-        
+
         home.save()
 
         # 7. Create a Site record
@@ -73,13 +118,13 @@ class Command(BaseCommand):
         for key, value in SOCIAL_DATA.items():
             if hasattr(social_settings, key):
                 setattr(social_settings, key, value)
-        
+
         # Handle Extra Links StreamField
         extra_links = []
         for item in EXTRA_SOCIAL_DATA:
             extra_links.append(("social_link", item))
         social_settings.extra_links = extra_links
-        
+
         social_settings.save()
 
         # 9. Seed Navigation Settings
@@ -89,7 +134,13 @@ class Command(BaseCommand):
         menu_items = []
         for item in NAV_DATA:
             menu_items.append(
-                ("menu_item", {"title": item["title"], "link_page": target_map.get(item["target"])})
+                (
+                    "menu_item",
+                    {
+                        "title": item["title"],
+                        "link_page": target_map.get(item["target"]),
+                    },
+                )
             )
         nav_settings.menu_items = menu_items
         nav_settings.save()
@@ -98,5 +149,6 @@ class Command(BaseCommand):
         index.save_revision().publish()
         home.save_revision().publish()
 
-        self.stdout.write(self.style.SUCCESS("Successfully seeded multi-page site with settings!"))
-
+        self.stdout.write(
+            self.style.SUCCESS("Successfully seeded multi-page site with settings!")
+        )

@@ -4,6 +4,7 @@ JANE_DOE_HOME = [
         {
             "title": "Jane Doe",
             "subtitle": "Creative Developer & Architect",
+            "image_url": "https://picsum.photos/1200/800",
         },
     ),
     (
@@ -104,18 +105,21 @@ PROJECTS_DATA = [
         "title": "Eco-Friendly Dashboard",
         "slug": "eco-dashboard",
         "client": "GreenFuture Inc.",
+        "image_url": "https://picsum.photos/800/600?random=1",
         "body": "<p>An interactive dashboard designed to track carbon footprints in real-time using IoT sensors and data visualization.</p>",
     },
     {
         "title": "Virtual Museum Tour",
         "slug": "museum-vr",
         "client": "National Arts Foundation",
+        "image_url": "https://picsum.photos/800/600?random=2",
         "body": "<p>A high-performance WebGL experience allowing users to explore historical artifacts in a 360-degree digital environment.</p>",
     },
     {
         "title": "Secure Fintech API",
         "slug": "fintech-api",
         "client": "SwiftPay Systems",
+        "image_url": "https://picsum.photos/800/600?random=3",
         "body": "<p>A robust and secure RESTful API built to handle high-volume financial transactions with multi-layered encryption.</p>",
     },
 ]

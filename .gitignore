@@ -5,3 +5,5 @@
 .vscode
 tailwind.config.js
 **/media/** 
+
+*/migrations/*

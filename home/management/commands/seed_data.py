@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from wagtail.models import Page, Site
 from home.models import HomePage
+from .content_data import JANE_DOE_HOME
 
 
 class Command(BaseCommand):
@@ -26,38 +27,7 @@ class Command(BaseCommand):
         home = HomePage(
             title="Jane Doe | Portfolio",
             slug="home",
-            body=[
-                (
-                    "hero",
-                    {
-                        "title": "Jane Doe",
-                        "subtitle": "Creative Developer & Architect",
-                    },
-                ),
-                (
-                    "about",
-                    {
-                        "heading": "About Me",
-                        "content": "<p>I am a developer focused on building clean, efficient, and beautiful web experiences.</p>",
-                    },
-                ),
-                (
-                    "services",
-                    {
-                        "heading": "What I Do",
-                        "services": [
-                            {
-                                "title": "Web Development",
-                                "description": "<p>Building modern apps with Django and Wagtail.</p>",
-                            },
-                            {
-                                "title": "UI/UX Design",
-                                "description": "<p>Designing intuitive user interfaces.</p>",
-                            },
-                        ],
-                    },
-                ),
-            ],
+            body=JANE_DOE_HOME,
         )
 
         # 4. Add Home Page as a child of Root

@@ -38,6 +38,18 @@ class ContactPage(AbstractEmailForm):
     ]
 
 
+class ContactFormBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=True)
+    description = blocks.TextBlock(required=False)
+    # We use a PageChooser to tell the block which Contact Page to use
+    form_page = blocks.PageChooserBlock(target_model="home.ContactPage")
+
+    class Meta:
+        template = "home/contact_form_block.html"
+        icon = "mail"
+        label = "Embedded Contact Form"
+
+
 class SocialLinkBlock(blocks.StructBlock):
     platform_name = blocks.CharBlock(required=True, help_text="e.g. Telegram Channel")
     url = blocks.URLBlock(required=True)
@@ -253,6 +265,7 @@ class HomePage(Page):
             ("services", ServicesListBlock()),
             ("showcase", FeaturedProjectsBlock()),
             ("contact", ContactBlock()),
+            ("contact_form", ContactFormBlock()),
             ("grid", GridBlock()),
         ],
         use_json_field=True,
@@ -271,6 +284,7 @@ class FlexPage(Page):
             ("services", ServicesListBlock()),
             ("showcase", FeaturedProjectsBlock()),
             ("contact", ContactBlock()),
+            ("contact_form", ContactFormBlock()),
             ("grid", GridBlock()),
         ],
         use_json_field=True,

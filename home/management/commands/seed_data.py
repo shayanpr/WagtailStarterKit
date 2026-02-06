@@ -41,7 +41,24 @@ def get_image(url, title):
 class Command(BaseCommand):
     help_text = "Automatically seeding dummy data to the database"
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--force",
+            action="store_true",
+            help="Delete existing data before seeding",
+        )
+
     def handle(self, *args, **options):
+        # Safety Check: Prevent accidental wipe
+        if not options["force"] and HomePage.objects.exists():
+            self.stdout.write(
+                self.style.ERROR(
+                    "ABORTING: Data already exists. Seeding will WIPE everything. "
+                    "Use --force to proceed (e.g. uv run python manage.py seed_data --force)"
+                )
+            )
+            return
+
         self.stdout.write("Seeding initial data for Jane Doe...")
 
         # 1. Get the Wagtail Root page

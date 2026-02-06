@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from wagtail.models import Page, Site
 from home.models import HomePage
 from portfolio.models import ProjectIndexPage, ProjectPage
-from .content_data import JANE_DOE_HOME, PROJECT_INDEX_DATA, PROJECTS_DATA
+from ..data.content_data import JANE_DOE_HOME, PROJECT_INDEX_DATA, PROJECTS_DATA
 import datetime
 
 
@@ -56,7 +56,7 @@ class Command(BaseCommand):
             if block.block_type == "showcase":
                 block.value["link_target"] = index
                 block.value["projects"] = index.get_children().live()
-        
+
         home.save()
 
         # 7. Create a Site record

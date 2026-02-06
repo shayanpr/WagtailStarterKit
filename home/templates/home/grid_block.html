@@ -1,0 +1,22 @@
+{% load wagtailcore_tags %}
+
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+        {% if value.grid_title %}
+            <h2 class="text-4xl font-bold mb-12 tracking-tight text-center">{{ value.grid_title }}</h2>
+        {% endif %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {% for column in value.columns %}
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    {# Each column is a StreamBlock, so we loop through and render its sub-blocks #}
+                    {% for block in column %}
+                        <div class="mb-4 last:mb-0">
+                            {% include_block block %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,56 @@
+{% load wagtailcore_tags %}
+
+<section class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6 max-w-3xl">
+        <div class="bg-white p-12 rounded-3xl shadow-sm border border-gray-100">
+            
+            <h2 class="text-4xl font-bold tracking-tight mb-4 text-center">{{ value.heading }}</h2>
+            {% if value.description %}
+                <p class="text-gray-600 text-center mb-10">{{ value.description }}</p>
+            {% endif %}
+
+            {# We point the action to the real ContactPage #}
+            <form action="{% pageurl value.form_page %}" method="POST" class="space-y-6">
+                {% csrf_token %}
+                
+                <div class="grid grid-cols-1 gap-6">
+                    {# We reach into the linked page and grab its fields #}
+                    {% for field in value.form_page.form_fields.all %}
+                        <div class="flex flex-col gap-2">
+                            <label class="font-medium text-gray-700">
+                                {{ field.label }}{% if field.required %}<span class="text-red-500">*</span>{% endif %}
+                            </label>
+                            
+                            <div class="contact-block-field">
+                                {% if field.field_type == 'multiline' %}
+                                    <textarea name="{{ field.clean_name }}" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-black outline-none transition-all"></textarea>
+                                {% elif field.field_type == 'checkbox' %}
+                                    <input type="checkbox" name="{{ field.clean_name }}" class="w-5 h-5">
+                                {% else %}
+                                    <input type="{{ field.field_type }}" name="{{ field.clean_name }}" required class="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-black outline-none transition-all">
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-lg mt-8">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Styling to match your previous form aesthetics */
+    .contact-block-field input, 
+    .contact-block-field textarea {
+        background-color: #f9fafb;
+    }
+    .contact-block-field input:focus, 
+    .contact-block-field textarea:focus {
+        background-color: #fff;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+    }
+</style>

@@ -1,4 +1,4 @@
-from urllib import response
+import os
 import requests
 from django.core.management.base import BaseCommand
 from django.core.files.base import ContentFile
@@ -18,23 +18,34 @@ from ..data.content_data import (
 import datetime
 
 
-def get_image(url, title):
+def get_image(url_or_path, title):
     """
-    Downloads an image from a URL and saves it as a Wagtail Image object.
-    Returns the Image object or None if the download fails.
+    Fetches an image from a URL or local path and saves it as a Wagtail Image object.
     """
     try:
-        response = requests.get(url, timeout=10)
-        if response.status_code == 200:
-            # Wrap the content in a Django ImageFile to ensure dimensions are read
-            file_name = f"{title.replace(' ', '_')}.jpg"
-            image_file = ImageFile(ContentFile(response.content), name=file_name)
-            
-            image = Image(title=title, file=image_file)
-            image.save()
-            return image
+        file_name = f"{title.replace(' ', '_')}.jpg"
+        
+        if url_or_path.startswith(('http://', 'https://')):
+            # Remote URL
+            response = requests.get(url_or_path, timeout=10)
+            if response.status_code == 200:
+                image_file = ImageFile(ContentFile(response.content), name=file_name)
+            else:
+                return None
+        else:
+            # Local Path
+            if os.path.exists(url_or_path):
+                with open(url_or_path, 'rb') as f:
+                    image_file = ImageFile(ContentFile(f.read()), name=file_name)
+            else:
+                print(f"Local file not found: {url_or_path}")
+                return None
+
+        image = Image(title=title, file=image_file)
+        image.save()
+        return image
     except Exception as e:
-        print(f"Error downloading image {url}: {e}")
+        print(f"Error processing image {url_or_path}: {e}")
     return None
 
 

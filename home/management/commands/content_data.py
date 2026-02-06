@@ -80,3 +80,30 @@ JANE_DOE_HOME = [
         }
     ),
 ]
+
+PROJECT_INDEX_DATA = {
+    "title": "Selected Work",
+    "slug": "work",
+    "intro": "Explore my latest development and design projects.",
+}
+
+PROJECTS_DATA = [
+    {
+        "title": "Eco-Friendly Dashboard",
+        "slug": "eco-dashboard",
+        "client": "GreenFuture Inc.",
+        "body": "<p>An interactive dashboard designed to track carbon footprints in real-time using IoT sensors and data visualization.</p>"
+    },
+    {
+        "title": "Virtual Museum Tour",
+        "slug": "museum-vr",
+        "client": "National Arts Foundation",
+        "body": "<p>A high-performance WebGL experience allowing users to explore historical artifacts in a 360-degree digital environment.</p>"
+    },
+    {
+        "title": "Secure Fintech API",
+        "slug": "fintech-api",
+        "client": "SwiftPay Systems",
+        "body": "<p>A robust and secure RESTful API built to handle high-volume financial transactions with multi-layered encryption.</p>"
+    },
+]

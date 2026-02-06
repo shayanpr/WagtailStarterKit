@@ -1,8 +1,8 @@
 from django.core.management.base import BaseCommand
 from wagtail.models import Page, Site
-from home.models import HomePage
+from home.models import HomePage, SocialMediaSettings, NavigationSettings
 from portfolio.models import ProjectIndexPage, ProjectPage
-from ..data.content_data import JANE_DOE_HOME, PROJECT_INDEX_DATA, PROJECTS_DATA
+from ..data.content_data import JANE_DOE_HOME, PROJECT_INDEX_DATA, PROJECTS_DATA, SOCIAL_DATA, NAV_DATA, EXTRA_SOCIAL_DATA
 import datetime
 
 
@@ -56,11 +56,11 @@ class Command(BaseCommand):
             if block.block_type == "showcase":
                 block.value["link_target"] = index
                 block.value["projects"] = index.get_children().live()
-
+        
         home.save()
 
         # 7. Create a Site record
-        Site.objects.create(
+        site = Site.objects.create(
             hostname="localhost",
             port=8000,
             root_page=home,
@@ -68,8 +68,35 @@ class Command(BaseCommand):
             site_name="Jane Doe Portfolio",
         )
 
-        # 8. Publish everything
+        # 8. Seed Social Media Settings (Dynamic)
+        social_settings = SocialMediaSettings.for_site(site)
+        for key, value in SOCIAL_DATA.items():
+            if hasattr(social_settings, key):
+                setattr(social_settings, key, value)
+        
+        # Handle Extra Links StreamField
+        extra_links = []
+        for item in EXTRA_SOCIAL_DATA:
+            extra_links.append(("social_link", item))
+        social_settings.extra_links = extra_links
+        
+        social_settings.save()
+
+        # 9. Seed Navigation Settings
+        nav_settings = NavigationSettings.for_site(site)
+        # Map targets to actual objects
+        target_map = {"home": home, "work": index}
+        menu_items = []
+        for item in NAV_DATA:
+            menu_items.append(
+                ("menu_item", {"title": item["title"], "link_page": target_map.get(item["target"])})
+            )
+        nav_settings.menu_items = menu_items
+        nav_settings.save()
+
+        # 10. Publish everything
         index.save_revision().publish()
         home.save_revision().publish()
 
-        self.stdout.write(self.style.SUCCESS("Successfully seeded multi-page site!"))
+        self.stdout.write(self.style.SUCCESS("Successfully seeded multi-page site with settings!"))
+

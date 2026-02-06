@@ -47,37 +47,49 @@ JANE_DOE_HOME = [
             "columns": [
                 [
                     ("heading", "01. Discovery"),
-                    ("paragraph", "<p>We deep-dive into your business goals, target audience, and technical requirements to build a solid foundation.</p>")
+                    (
+                        "paragraph",
+                        "<p>We deep-dive into your business goals, target audience, and technical requirements to build a solid foundation.</p>",
+                    ),
                 ],
                 [
                     ("heading", "02. Strategy"),
-                    ("paragraph", "<p>Creating a detailed roadmap, wireframes, and technical architecture to ensure the project stays on track.</p>")
+                    (
+                        "paragraph",
+                        "<p>Creating a detailed roadmap, wireframes, and technical architecture to ensure the project stays on track.</p>",
+                    ),
                 ],
                 [
                     ("heading", "03. Execution"),
-                    ("paragraph", "<p>The build phase where design and code come together through iterative development and constant feedback.</p>")
+                    (
+                        "paragraph",
+                        "<p>The build phase where design and code come together through iterative development and constant feedback.</p>",
+                    ),
                 ],
                 [
                     ("heading", "04. Support"),
-                    ("paragraph", "<p>Beyond launch, I provide ongoing maintenance and performance optimization to ensure long-term success.</p>")
-                ]
-            ]
-        }
+                    (
+                        "paragraph",
+                        "<p>Beyond launch, I provide ongoing maintenance and performance optimization to ensure long-term success.</p>",
+                    ),
+                ],
+            ],
+        },
     ),
     (
         "showcase",
         {
             "heading": "Featured Case Studies",
             "intro": "A selection of my recent work focusing on technical complexity and user-centric design.",
-            "projects": []
-        }
+            "projects": [],
+        },
     ),
     (
         "contact",
         {
             "heading": "Let's Build Something Together",
-            "text": "Whether you have a specific project in mind or just want to explore the possibilities, I'm always open to discussing new opportunities."
-        }
+            "text": "Whether you have a specific project in mind or just want to explore the possibilities, I'm always open to discussing new opportunities.",
+        },
     ),
 ]
 
@@ -92,18 +104,36 @@ PROJECTS_DATA = [
         "title": "Eco-Friendly Dashboard",
         "slug": "eco-dashboard",
         "client": "GreenFuture Inc.",
-        "body": "<p>An interactive dashboard designed to track carbon footprints in real-time using IoT sensors and data visualization.</p>"
+        "body": "<p>An interactive dashboard designed to track carbon footprints in real-time using IoT sensors and data visualization.</p>",
     },
     {
         "title": "Virtual Museum Tour",
         "slug": "museum-vr",
         "client": "National Arts Foundation",
-        "body": "<p>A high-performance WebGL experience allowing users to explore historical artifacts in a 360-degree digital environment.</p>"
+        "body": "<p>A high-performance WebGL experience allowing users to explore historical artifacts in a 360-degree digital environment.</p>",
     },
     {
         "title": "Secure Fintech API",
         "slug": "fintech-api",
         "client": "SwiftPay Systems",
-        "body": "<p>A robust and secure RESTful API built to handle high-volume financial transactions with multi-layered encryption.</p>"
+        "body": "<p>A robust and secure RESTful API built to handle high-volume financial transactions with multi-layered encryption.</p>",
     },
+]
+
+SOCIAL_DATA = {
+    "email": "jane@doe.com",
+    "linkedin": "https://linkedin.com/in/janedoe",
+    "github": "https://github.com/janedoe",
+    "twitter": "https://twitter.com/janedoe",
+}
+
+# Generic external links for testing the extra_links StreamField
+EXTRA_SOCIAL_DATA = [
+    {"platform_name": "Google", "url": "https://google.com"},
+    {"platform_name": "YouTube", "url": "https://youtube.com"},
+]
+# For navigation, we provide the titles. The script will link them to the correct pages.
+NAV_DATA = [
+    {"title": "Home", "target": "home"},
+    {"title": "Work", "target": "work"},
 ]

@@ -4,7 +4,7 @@ from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel, InlinePanel
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import TaggedItemBase, Tag
 
 
 class ProjectIndexPage(Page):
@@ -25,6 +25,10 @@ class ProjectIndexPage(Page):
         if tag:
             projects = projects.filter(tags__name=tag)
         context["projects"] = projects
+
+        context["all_tags"] = Tag.objects.filter(
+            portfolio_projectpagetag_items__content_object__in=projects
+        ).distinct()
         return context
 
 

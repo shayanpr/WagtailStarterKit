@@ -113,3 +113,27 @@ class GridBlock(blocks.StructBlock):
         icon = "table"
         label = "Grid Section"
         template = "blocks/grid_block.html"
+
+
+class TierBlock(blocks.StructBlock):
+    name = blocks.CharBlock(required=True)
+    description = blocks.CharBlock(required=False)
+    price_or_label = blocks.CharBlock(required=False, help_text="e.g. $10/mo or Free")
+    features = blocks.ListBlock(blocks.CharBlock(), label="Feature List")
+    button_text = blocks.CharBlock(required=False, default="Get Started")
+    button_link = blocks.PageChooserBlock(required=False)
+    is_featured = blocks.BooleanBlock(required=False, help_text="Highlight this plan?")
+
+    class Meta:
+        icon = "pick"
+        label = "Individual Tier"
+
+
+class ComparisonBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    tiers = blocks.ListBlock(TierBlock(), min_num=1, max_num=4)
+
+    class Meta:
+        template = "blocks/comparison_block.html"
+        icon = "table"
+        label = "Comparison/Pricing Table"

@@ -2,11 +2,20 @@ from django.db import models
 from modelcluster.fields import ParentalKey
 from wagtail.models import Page
 from wagtail import blocks
-from wagtail.images.blocks import ImageChooserBlock
 from wagtail.fields import StreamField, RichTextField
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
+from blocks.models import (
+    ContactFormBlock,
+    GridBlock,
+    HeroBlock,
+    ServicesListBlock,
+    AboutBlock,
+    FeaturedProjectsBlock,
+    ContactBlock,
+    SocialLinkBlock,
+)
 
 
 class FormField(AbstractFormField):
@@ -36,28 +45,6 @@ class ContactPage(AbstractEmailForm):
             "Email Configuration",
         ),
     ]
-
-
-class ContactFormBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(required=True)
-    description = blocks.TextBlock(required=False)
-    # We use a PageChooser to tell the block which Contact Page to use
-    form_page = blocks.PageChooserBlock(target_model="home.ContactPage")
-
-    class Meta:
-        template = "home/contact_form_block.html"
-        icon = "mail"
-        label = "Embedded Contact Form"
-
-
-class SocialLinkBlock(blocks.StructBlock):
-    platform_name = blocks.CharBlock(required=True, help_text="e.g. Telegram Channel")
-    url = blocks.URLBlock(required=True)
-    icon = ImageChooserBlock(required=False, help_text="Upload a logo/icon")
-
-    class Meta:
-        icon = "link"
-        label = "Custom Social Link"
 
 
 @register_setting
@@ -165,97 +152,6 @@ class NavigationSettings(BaseSiteSetting):
     panels = [
         FieldPanel("menu_items"),
     ]
-
-
-class ContactBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(
-        required=True, default="Get in Touch!", help_text="Contact Me"
-    )
-    text = blocks.TextBlock(required=False, default="Lets work together.")
-    illustration = ImageChooserBlock(
-        required=False, help_text="Side illustration image"
-    )
-
-    class Meta:
-        icon = "mail"
-        label = "Contact Section (Auto Linked)"
-        template = "home/contact_block.html"
-
-
-class HeroBlock(blocks.StructBlock):
-    title = blocks.CharBlock(required=True, help_text="Main Headline")
-    subtitle = blocks.TextBlock(required=False)
-    image = ImageChooserBlock(required=False)
-
-    class Meta:
-        icon = "user"
-        label = "Hero Section"
-        template = "home/hero_block.html"
-
-
-class AboutBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(required=True, help_text="About Me")
-    content = blocks.RichTextBlock(required=False)
-
-    class Meta:
-        icon = "doc-full"
-        label = "About Section"
-        template = "home/about_block.html"
-
-
-class ServiceBlock(blocks.StructBlock):
-    title = blocks.CharBlock(required=True)
-    description = blocks.RichTextBlock(required=True)
-    icon = ImageChooserBlock(required=False)
-
-    class Meta:
-        icon = "tick-inverse"
-        label = "Single Service Card"
-        template = "home/service_block.html"
-
-
-class ServicesListBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False, default="My Services")
-    services = blocks.ListBlock(ServiceBlock())
-
-    class Meta:
-        icon = "list-ul"
-        label = "Services Grid"
-        template = "home/services_list_block.html"
-
-
-class FeaturedProjectsBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(default="Selected Projects", required=False)
-    intro = blocks.TextBlock(required=False, default="Some of my recent projects.")
-    projects = blocks.ListBlock(
-        blocks.PageChooserBlock(target_model="portfolio.ProjectPage", required=False)
-    )
-    link_target = blocks.PageChooserBlock(required=False, help_text="Link to View All")
-
-    class Meta:
-        icon = "pick"
-        label = "Featured Projects"
-        template = "home/featured_projects_block.html"
-
-
-class ColumnBlock(blocks.StreamBlock):
-    heading = blocks.CharBlock(icon="title")
-    paragraph = blocks.RichTextBlock(icon="pilcrow")
-    image = ImageChooserBlock(icon="image")
-    contact_form = ContactFormBlock(icon="mail")
-
-    class Meta:
-        label = "Columns Content"
-
-
-class GridBlock(blocks.StructBlock):
-    grid_title = blocks.CharBlock(required=False, help_text="Optional Section Heading.")
-    columns = blocks.ListBlock(ColumnBlock(), label="Columns", min_num=1, max_num=4)
-
-    class Meta:
-        icon = "table"
-        label = "Grid Section"
-        template = "home/grid_block.html"
 
 
 class HomePage(Page):

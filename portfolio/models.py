@@ -23,7 +23,7 @@ class ProjectIndexPage(Page):
         )
         tag = request.GET.get("tag")
         if tag:
-            projects = projects.filter(tags__name=tag)
+            projects = projects.filter(tags__slug=tag)
         context["projects"] = projects
 
         context["all_tags"] = Tag.objects.filter(

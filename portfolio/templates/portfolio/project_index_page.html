@@ -19,10 +19,30 @@
 
 {# --- Project Grid --- #}
 <div class="container mx-auto px-6 py-20">
+    
+    {# 1. The Filter Bar #}
+    {% if all_tags %}
+    <div class="flex flex-wrap justify-center gap-3 mb-16">
+        {# "All" Link #}
+        <a href="{% pageurl page %}" 
+           class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if not request.GET.tag %}bg-black text-white border-black{% else %}border-gray-200 text-gray-500 hover:border-black hover:text-black{% endif %}">
+            All Projects
+        </a>
+
+        {# Tag Links #}
+        {% for tag in all_tags %}
+            <a href="{% pageurl page %}?tag={{ tag.slug }}" 
+               class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if request.GET.tag == tag.slug %}bg-black text-white border-black{% else %}border-gray-200 text-gray-500 hover:border-black hover:text-black{% endif %}">
+                {{ tag.name }}
+            </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         
-        {# Loop through live child pages #}
-        {% for project in page.get_children.live.specific %}
+        {# Loop through the filtered 'projects' list from get_context #}
+        {% for project in projects %}
             <a href="{% pageurl project %}" class="group block bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
                 
                 {# Card Image #}

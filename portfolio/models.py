@@ -21,6 +21,9 @@ class ProjectIndexPage(Page):
         projects = (
             ProjectPage.objects.child_of(self).live().specific().order_by("-date")
         )
+        tag = request.GET.get("tag")
+        if tag:
+            projects = projects.filter(tags__name=tag)
         context["projects"] = projects
         return context
 

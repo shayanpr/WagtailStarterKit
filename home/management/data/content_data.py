@@ -92,7 +92,92 @@ JANE_DOE_HOME = [
             "text": "Whether you have a specific project in mind or just want to explore the possibilities, I'm always open to discussing new opportunities.",
         },
     ),
+    (
+        "comparison",
+        {
+            "heading": "Standard Service Tiers",
+            "tiers": [
+                {
+                    "name": "Starter",
+                    "description": "Perfect for personal projects",
+                    "price_or_label": "$499",
+                    "features": ["Single Page App", "Wagtail CMS", "1 Month Support"],
+                    "button_text": "Select Starter",
+                    "target": "contact"
+                },
+                {
+                    "name": "Professional",
+                    "description": "Best for growing businesses",
+                    "price_or_label": "$1,499",
+                    "features": ["Multi-page Site", "Custom Blocks", "SEO Optimization", "3 Months Support"],
+                    "is_featured": True,
+                    "button_text": "Go Pro",
+                    "target": "contact"
+                },
+                {
+                    "name": "Enterprise",
+                    "description": "For high-scale applications",
+                    "price_or_label": "Custom",
+                    "features": ["Cloud Infrastructure", "API Integrations", "Advanced Security", "Priority Support"],
+                    "button_text": "Contact Sales",
+                    "target": "contact"
+                }
+            ]
+        }
+    ),
 ]
+
+CLOUD_SERVICES_PAGE_DATA = {
+    "title": "Cloud Infrastructure Services",
+    "slug": "cloud-services",
+    "body": [
+        (
+            "hero",
+            {
+                "title": "Scalable Cloud Architecture",
+                "subtitle": "High-performance infrastructure for modern web applications.",
+                "image_url": "https://picsum.photos/1200/800?random=10"
+            }
+        ),
+        (
+            "grid",
+            {
+                "grid_title": "Our Infrastructure Stack",
+                "columns": [
+                    [
+                        ("heading", "Docker & Kubernetes"),
+                        ("paragraph", "<p>Containerized workflows for consistent development and deployment across all environments.</p>")
+                    ],
+                    [
+                        ("heading", "AWS & Azure"),
+                        ("paragraph", "<p>Leveraging the power of global cloud providers to ensure 99.9% uptime and global reach.</p>")
+                    ]
+                ]
+            }
+        ),
+        (
+            "comparison",
+            {
+                "heading": "Cloud Hosting Plans",
+                "tiers": [
+                    {
+                        "name": "Basic VPS",
+                        "price_or_label": "$10/mo",
+                        "features": ["2GB RAM", "1 vCPU", "50GB SSD"],
+                        "target": "contact"
+                    },
+                    {
+                        "name": "Pro Cluster",
+                        "price_or_label": "$150/mo",
+                        "features": ["16GB RAM", "8 vCPU", "500GB SSD", "Auto-scaling"],
+                        "is_featured": True,
+                        "target": "contact"
+                    }
+                ]
+            }
+        )
+    ]
+}
 
 PROJECT_INDEX_DATA = {
     "title": "Selected Work",
@@ -139,6 +224,7 @@ EXTRA_SOCIAL_DATA = [
 # For navigation, we provide the titles. The script will link them to the correct pages.
 NAV_DATA = [
     {"title": "Home", "target": "home"},
+    {"title": "Cloud", "target": "cloud"},
     {"title": "Work", "target": "work"},
     {"title": "Contact", "target": "contact"},
 ]

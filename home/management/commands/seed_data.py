@@ -5,7 +5,7 @@ from django.core.files.base import ContentFile
 from django.core.files.images import ImageFile
 from wagtail.images.models import Image
 from wagtail.models import Page, Site
-from home.models import HomePage, SocialMediaSettings, NavigationSettings, ContactPage, FormField
+from home.models import HomePage, SocialMediaSettings, NavigationSettings, ContactPage, FormField, FlexPage
 from portfolio.models import ProjectIndexPage, ProjectPage
 from ..data.content_data import (
     JANE_DOE_HOME,
@@ -16,6 +16,7 @@ from ..data.content_data import (
     EXTRA_SOCIAL_DATA,
     CONTACT_PAGE_DATA,
     CONTACT_FORM_FIELDS,
+    CLOUD_SERVICES_PAGE_DATA,
 )
 import datetime
 
@@ -95,10 +96,16 @@ class Command(BaseCommand):
         # 4. Create the Home Page Instance
         # Process Home Page Images
         for block_type, block_value in JANE_DOE_HOME:
-            if "image_url" in block_value:
-                url = block_value.pop("image_url")
-                img_obj = get_image(url, f"Home_{block_type}")
-                block_value["image"] = img_obj
+            if isinstance(block_value, dict):
+                if "image_url" in block_value:
+                    url = block_value.pop("image_url")
+                    block_value["image"] = get_image(url, f"Home_{block_type}")
+                
+                # Remove temporary targets
+                block_value.pop("target", None)
+                if block_type == "comparison":
+                    for tier in block_value.get("tiers", []):
+                        tier.pop("target", None)
 
         home = HomePage(
             title="Jane Doe | Portfolio",
@@ -120,6 +127,27 @@ class Command(BaseCommand):
         )
         home.add_child(instance=contact_page)
 
+        # 4.6 Create Cloud Services FlexPage
+        cloud_page_body = CLOUD_SERVICES_PAGE_DATA["body"]
+        for block_type, block_value in cloud_page_body:
+            if isinstance(block_value, dict):
+                if "image_url" in block_value:
+                    url = block_value.pop("image_url")
+                    block_value["image"] = get_image(url, f"Cloud_{block_type}")
+                
+                # Remove temporary targets
+                block_value.pop("target", None)
+                if block_type == "comparison":
+                    for tier in block_value.get("tiers", []):
+                        tier.pop("target", None)
+
+        cloud_services = FlexPage(
+            title=CLOUD_SERVICES_PAGE_DATA["title"],
+            slug=CLOUD_SERVICES_PAGE_DATA["slug"],
+            body=cloud_page_body,
+        )
+        home.add_child(instance=cloud_services)
+
         # Add Form Fields to Contact Page
         for field_data in CONTACT_FORM_FIELDS:
             FormField.objects.create(
@@ -128,6 +156,23 @@ class Command(BaseCommand):
                 field_type=field_data["field_type"],
                 required=field_data["required"],
             )
+
+        # 11. Final Linking: Connect blocks to the contact_page
+        def link_blocks(stream_data):
+            for block in stream_data:
+                if block.block_type == "contact_form":
+                    block.value["form_page"] = contact_page
+                elif block.block_type == "comparison":
+                    for tier in block.value.get("tiers", []):
+                        tier["button_link"] = contact_page
+                elif block.block_type == "grid":
+                    for column in block.value.get("columns", []):
+                        link_blocks(column)
+
+        link_blocks(home.body)
+        link_blocks(cloud_services.body)
+        home.save()
+        cloud_services.save()
 
         # 5. Create Individual Project Pages
         for project_data in PROJECTS_DATA:
@@ -181,7 +226,12 @@ class Command(BaseCommand):
         # 9. Seed Navigation Settings
         nav_settings = NavigationSettings.for_site(site)
         # Map targets to actual objects
-        target_map = {"home": home, "work": index, "contact": contact_page}
+        target_map = {
+            "home": home, 
+            "work": index, 
+            "contact": contact_page,
+            "cloud": cloud_services
+        }
         menu_items = []
         for item in NAV_DATA:
             menu_items.append(
@@ -199,6 +249,7 @@ class Command(BaseCommand):
         # 10. Publish everything
         index.save_revision().publish()
         contact_page.save_revision().publish()
+        cloud_services.save_revision().publish()
         home.save_revision().publish()
 
         self.stdout.write(

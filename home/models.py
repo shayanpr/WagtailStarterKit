@@ -242,6 +242,7 @@ class ColumnBlock(blocks.StreamBlock):
     heading = blocks.CharBlock(icon="title")
     paragraph = blocks.RichTextBlock(icon="pilcrow")
     image = ImageChooserBlock(icon="image")
+    contact_form = ContactFormBlock(icon="mail")
 
     class Meta:
         label = "Columns Content"

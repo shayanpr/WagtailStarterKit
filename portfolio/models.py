@@ -3,6 +3,8 @@ from wagtail.models import Page, Orderable
 from wagtail.fields import RichTextField
 from wagtail.admin.panels import FieldPanel, InlinePanel
 from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from taggit.models import TaggedItemBase
 
 
 class ProjectIndexPage(Page):
@@ -23,6 +25,14 @@ class ProjectIndexPage(Page):
         return context
 
 
+class ProjectPageTag(TaggedItemBase):
+    content_object = ParentalKey(
+        "ProjectPage",
+        related_name="tagged_items",
+        on_delete=models.CASCADE,
+    )
+
+
 class ProjectPage(Page):
     client = models.CharField(max_length=200)
     date = models.DateField("Project date")
@@ -34,12 +44,14 @@ class ProjectPage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    tags = ClusterTaggableManager(through=ProjectPageTag, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("client"),
         FieldPanel("date"),
         FieldPanel("main_image"),
         FieldPanel("body"),
+        FieldPanel("tags"),
         InlinePanel("gallery_images", label="Gallery images"),
     ]
 

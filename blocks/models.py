@@ -1,5 +1,9 @@
+from django.db import models
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.snippets.blocks import SnippetChooserBlock
+from wagtail.snippets.models import register_snippet
+from wagtail.admin.panels import FieldPanel
 
 
 class ContactFormBlock(blocks.StructBlock):
@@ -95,11 +99,48 @@ class FeaturedProjectsBlock(blocks.StructBlock):
         template = "blocks/featured_projects_block.html"
 
 
+@register_snippet
+class Testimonial(models.Model):
+    author_name = models.CharField(max_length=255)
+    author_role = models.CharField(max_length=255, blank=True)
+    company = models.CharField(max_length=255, blank=True)
+    quote = models.TextField()
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    panels = [
+        FieldPanel("author_name"),
+        FieldPanel("author_role"),
+        FieldPanel("company"),
+        FieldPanel("quote"),
+        FieldPanel("image"),
+    ]
+
+    def __str__(self):
+        return f"{self.author_name} - {self.company}"
+
+
+class TestimonialBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    testimonials = blocks.ListBlock(SnippetChooserBlock(Testimonial))
+
+    class Meta:
+        template = "blocks/testimonial_block.html"
+        icon = "openquote"
+        label = "Testimonial Block"
+
+
 class ColumnBlock(blocks.StreamBlock):
     heading = blocks.CharBlock(icon="title")
     paragraph = blocks.RichTextBlock(icon="pilcrow")
     image = ImageChooserBlock(icon="image")
     contact_form = ContactFormBlock(icon="mail")
+    testimonial = TestimonialBlock(icon="openquote")
 
     class Meta:
         label = "Columns Content"

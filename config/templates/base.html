@@ -21,7 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     {% if settings.home.BrandingSettings.favicon %}
-        {% image settings.home.BrandingSettings.favicon fill-32x32 as favicon_ext %}
+        {% image settings.home.BrandingSettings.favicon fill-64x64 as favicon_ext %}
         <link rel="icon" type="image/x-icon" href="{{ favicon_ext.url }}">
     {% endif %}
 

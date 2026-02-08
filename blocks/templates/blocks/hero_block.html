@@ -4,7 +4,7 @@
     {# This seems like a comment. #}
     <div class="absolute inset-0 z-0 opacity-50">
         {% if self.image %}
-            {% image self.image fill-1920x1080 as bg_img %}
+            {% image self.image fill-1920x800-c100 format-webp as bg_img %}
             <img src="{{ bg_img.url }}" alt="{{bg_img.alt}}" class="w-full h-full object-cover">
         {% endif %}
     </div>

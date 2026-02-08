@@ -6,7 +6,7 @@
 {# --- Hero Section (Full Screen Impact) --- #}
 <div class="relative w-full h-[60vh] md:h-[70vh] bg-gray-900 overflow-hidden">
     {% if page.main_image %}
-        {% image page.main_image fill-1920x1080 class="w-full h-full object-cover opacity-90" %}
+        {% image page.main_image fill-1920x1080 format-webp class="w-full h-full object-cover opacity-90" %}
     {% endif %}
     
     {# Title Overlay #}
@@ -77,7 +77,7 @@
                     <div class="space-y-12">
                         {% for item in page.gallery_images.all %}
                             <figure class="bg-gray-50 rounded-xl overflow-hidden shadow-sm">
-                                {% image item.image width-1200 class="w-full h-auto" %}
+                                {% image item.image width-1200 format-webp class="w-full h-auto" %}
                                 {% if item.caption %}
                                     <figcaption class="p-4 text-center text-sm text-gray-500 italic">
                                         {{ item.caption }}

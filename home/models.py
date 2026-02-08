@@ -17,6 +17,7 @@ from blocks.models import (
     SocialLinkBlock,
     ComparisonBlock,
     TestimonialBlock,
+    FAQBlock,
 )
 
 
@@ -167,6 +168,7 @@ class HomePage(Page):
             ("contact_form", ContactFormBlock()),
             ("comparison", ComparisonBlock()),
             ("testimonials", TestimonialBlock()),
+            ("faq", FAQBlock()),
             ("grid", GridBlock()),
         ],
         use_json_field=True,
@@ -188,6 +190,7 @@ class FlexPage(Page):
             ("contact_form", ContactFormBlock()),
             ("comparison", ComparisonBlock()),
             ("testimonials", TestimonialBlock()),
+            ("faq", FAQBlock()),
             ("grid", GridBlock()),
         ],
         use_json_field=True,

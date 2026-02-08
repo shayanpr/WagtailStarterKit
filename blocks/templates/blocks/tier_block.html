@@ -1,0 +1,40 @@
+{% load wagtailcore_tags %}
+{% load wagtailsettings_tags %}
+                
+                <div class="flex flex-col p-8 rounded-3xl border transition-all duration-300 {% if value.is_featured %} border-black ring-1 ring-black shadow-xl bg-white scale-105 z-10 {% else %} border-gray-100 bg-gray-50 hover:bg-white hover:shadow-lg {% endif %}">
+                    
+                    {# value.Header #}
+                    <div class="mb-8">
+                        {% if value.is_featured %}
+                            <span class="inline-block px-4 py-1 rounded-full bg-black text-white text-xs font-bold uppercase tracking-widest mb-4">Most Popular</span>
+                        {% endif %}
+                        <h3 class="text-2xl font-bold mb-2">{{ value.name }}</h3>
+                        {% if value.description %}
+                            <p class="text-gray-500 text-sm">{{ value.description }}</p>
+                        {% endif %}
+                    </div>
+
+                    {# Value/Price #}
+                    <div class="mb-8">
+                        <span class="text-4xl font-bold tracking-tighter">{{ value.price_or_label }}</span>
+                    </div>
+
+                    {# Feature List #}
+                    <ul class="space-y-4 mb-10 flex-grow">
+                        {% for feature in value.features %}
+                            <li class="flex items-start gap-3 text-sm text-gray-600">
+                                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                {{ feature }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    {# CTA Button #}
+                    {% if value.button_link %}
+                        <a href="{% pageurl value.button_link %}" class="block text-center py-4 rounded-xl font-bold transition-all {% if value.is_featured %} bg-black text-white hover:bg-gray-800 {% else %} bg-white border border-gray-200 text-black hover:border-black {% endif %}">
+                            {{ value.button_text|default:"Get Started" }}
+                        </a>
+                    {% endif %}
+                </div>

@@ -1,0 +1,42 @@
+{% load wagtailcore_tags %}
+
+<section class="py-24 bg-white">
+    <div class="container mx-auto px-6 max-w-4xl">
+        
+        {# Section Header #}
+        {% if value.heading %}
+            <h2 class="text-4xl font-bold text-center mb-4 tracking-tight">{{ value.heading }}</h2>
+        {% endif %}
+        
+        {% if value.description %}
+            <p class="text-gray-500 text-center mb-16 text-lg">{{ value.description }}</p>
+        {% endif %}
+
+        {# Accordion Container #}
+        <div class="space-y-4">
+            {% for item in value.items %}
+                <details class="group bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden transition-all duration-300 open:bg-white open:shadow-xl open:border-black">
+                    
+                    {# Question (Trigger) #}
+                    {# list-none and [&::-webkit-details-marker]:hidden are used to hide default browser arrows #}
+                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                        <span class="text-lg font-bold text-gray-900 pr-8">{{ item.question }}</span>
+                        
+                        {# Custom Arrow Icon #}
+                        <div class="text-gray-400 group-open:rotate-180 transition-transform duration-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </div>
+                    </summary>
+
+                    {# Answer (Content) #}
+                    <div class="px-6 pb-8 text-gray-600 leading-relaxed prose prose-blue max-w-none">
+                        {{ item.answer|richtext }}
+                    </div>
+                    
+                </details>
+            {% endfor %}
+        </div>
+    </div>
+</section>

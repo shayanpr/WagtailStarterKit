@@ -18,6 +18,7 @@ class ProjectIndexPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+        all_projects = ProjectPage.objects.child_of(self).live().specific()
         projects = (
             ProjectPage.objects.child_of(self).live().specific().order_by("-date")
         )
@@ -26,9 +27,13 @@ class ProjectIndexPage(Page):
             projects = projects.filter(tags__slug=tag)
         context["projects"] = projects
 
-        context["all_tags"] = Tag.objects.filter(
-            portfolio_projectpagetag_items__content_object__in=projects
-        ).distinct()
+        context["all_tags"] = (
+            Tag.objects.filter(
+                portfolio_projectpagetag_items__content_object__in=all_projects
+            )
+            .distinct()
+            .order_by("name")
+        )
         return context
 
 

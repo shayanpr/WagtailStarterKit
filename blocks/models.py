@@ -6,6 +6,26 @@ from wagtail.snippets.models import register_snippet
 from wagtail.admin.panels import FieldPanel
 
 
+class FAQItemBlock(blocks.StructBlock):
+    question = blocks.CharBlock(required=True)
+    answer = blocks.RichTextBlock(required=True)
+
+    class Meta:
+        icon = "question"
+        label = "Question and Answer"
+
+
+class FAQBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False, default="Frequently Asked Questions")
+    description = blocks.TextBlock(required=False)
+    items = blocks.ListBlock(FAQItemBlock())
+
+    class Meta:
+        icon = "help"
+        label = "FAQ Section"
+        template = "blocks/faq_block.html"
+
+
 class ContactFormBlock(blocks.StructBlock):
     heading = blocks.CharBlock(required=True)
     description = blocks.TextBlock(required=False)
@@ -135,12 +155,45 @@ class TestimonialBlock(blocks.StructBlock):
         label = "Testimonial Block"
 
 
+class TierBlock(blocks.StructBlock):
+    name = blocks.CharBlock(required=True)
+    description = blocks.CharBlock(required=False)
+    price_or_label = blocks.CharBlock(required=False, help_text="e.g. $10/mo or Free")
+    features = blocks.ListBlock(blocks.CharBlock(), label="Feature List")
+    button_text = blocks.CharBlock(required=False, default="Get Started")
+    button_link = blocks.PageChooserBlock(required=False)
+    is_featured = blocks.BooleanBlock(required=False, help_text="Highlight this plan?")
+
+    class Meta:
+        icon = "pick"
+        label = "Individual Tier"
+        template = "blocks/tier_block.html"
+
+
+class ComparisonBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False)
+    tiers = blocks.ListBlock(TierBlock(), min_num=1, max_num=4)
+
+    class Meta:
+        template = "blocks/comparison_block.html"
+        icon = "table"
+        label = "Comparison/Pricing Table"
+
+
 class ColumnBlock(blocks.StreamBlock):
+    hero = HeroBlock(icon="user")
+    about = AboutBlock(icon="doc-full")
     heading = blocks.CharBlock(icon="title")
     paragraph = blocks.RichTextBlock(icon="pilcrow")
     image = ImageChooserBlock(icon="image")
     contact_form = ContactFormBlock(icon="mail")
     testimonial = TestimonialBlock(icon="openquote")
+    featured_projects = FeaturedProjectsBlock(icon="pick")
+    service = ServiceBlock(icon="tick-inverse")
+    services_list = ServicesListBlock(icon="list-ul")
+    tier = TierBlock(icon="pick")
+    comparison = ComparisonBlock(icon="table")
+    faq = FAQBlock(icon="help")
 
     class Meta:
         label = "Columns Content"
@@ -154,27 +207,3 @@ class GridBlock(blocks.StructBlock):
         icon = "table"
         label = "Grid Section"
         template = "blocks/grid_block.html"
-
-
-class TierBlock(blocks.StructBlock):
-    name = blocks.CharBlock(required=True)
-    description = blocks.CharBlock(required=False)
-    price_or_label = blocks.CharBlock(required=False, help_text="e.g. $10/mo or Free")
-    features = blocks.ListBlock(blocks.CharBlock(), label="Feature List")
-    button_text = blocks.CharBlock(required=False, default="Get Started")
-    button_link = blocks.PageChooserBlock(required=False)
-    is_featured = blocks.BooleanBlock(required=False, help_text="Highlight this plan?")
-
-    class Meta:
-        icon = "pick"
-        label = "Individual Tier"
-
-
-class ComparisonBlock(blocks.StructBlock):
-    heading = blocks.CharBlock(required=False)
-    tiers = blocks.ListBlock(TierBlock(), min_num=1, max_num=4)
-
-    class Meta:
-        template = "blocks/comparison_block.html"
-        icon = "table"
-        label = "Comparison/Pricing Table"

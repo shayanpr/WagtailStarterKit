@@ -2,17 +2,18 @@
 
 ## 🚀 High Priority (Core Features)
 - [x] **Contact Page Model:** Implemented `AbstractEmailForm` with custom field builder.
+- [x] **Project Tagging:** Integrated `django-taggit` with smart filtering on `ProjectIndexPage`.
 - [ ] **About Us Page:** Create a dedicated model for About pages, potentially including a "Team Member" Orderable or a specialized layout.
 - [ ] **Blog App:** Dedicated `BlogPage` with Tags, Categories, and an RSS feed.
 
 ## 🏢 B2B / Corporate Features
 - [x] **Pricing/Comparison Tables:** Created dynamic `ComparisonBlock` with featured tier support.
+- [x] **FAQ Accordion:** Collapsible questions and answers using pure HTML/Tailwind.
 - [ ] **Trust & Social Proof:**
-    - [ ] **Testimonials Snippet:** Manage client quotes centrally and select them via `TestimonialChooserBlock`.
+    - [x] **Testimonials Snippet:** Manage client quotes centrally and select them via `TestimonialBlock`.
     - [ ] **Partner Logo Grid:** A "Trusted By" block for displaying client logos.
     - [ ] **Team Section:** `TeamMemberBlock` with photo, role, bio, and LinkedIn link.
 - [ ] **Sales & Service:**
-    - [ ] **FAQ Accordion:** Collapsible questions and answers for handling customer objections.
     - [ ] **Global CTA:** A reusable "Call to Action" strip for the footer or page bottom.
 - [ ] **Case Study Model:** A variation of `ProjectPage` focused on "Problem -> Solution -> ROI/Results".
 
@@ -20,7 +21,7 @@
 - [ ] **Multi-language Support:** Integrate `wagtail-localize` for parallel translation trees.
 - [x] **Migration Reset Strategy:** Clean up logic established for clean `0001_initial` releases.
 - [ ] **GitHub Template Config:** Finalize the repository as a GitHub Template.
-- [x] **Programmatic Seeding:** Robust `seed_data.py` script with image and settings automation.
+- [x] **Programmatic Seeding:** Robust `seed_data.py` script with image, settings, and recursive cleaning automation.
 
 ## 🎨 Design & UI
 - [ ] **Tailwind Components:** Expand the available StreamField blocks (e.g., Stats, Features with Icons).
@@ -31,4 +32,4 @@
 
 ## 📦 Maintenance
 - [x] **Code Reorganization:** Moved blocks to a dedicated `blocks` app for better modularity.
-- [ ] **Documentation:** Update `README.md` with instructions on how to use the new Form and Comparison features.
+- [ ] **Documentation:** Update `README.md` with instructions on how to use the new Form, Tagging, and Comparison features.

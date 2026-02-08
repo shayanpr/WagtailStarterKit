@@ -18,6 +18,7 @@ from blocks.models import (
     ComparisonBlock,
     TestimonialBlock,
     FAQBlock,
+    PartnerLogoBlock,
 )
 
 
@@ -169,6 +170,7 @@ class HomePage(Page):
             ("comparison", ComparisonBlock()),
             ("testimonials", TestimonialBlock()),
             ("faq", FAQBlock()),
+            ("partners", PartnerLogoBlock()),
             ("grid", GridBlock()),
         ],
         use_json_field=True,
@@ -191,6 +193,7 @@ class FlexPage(Page):
             ("comparison", ComparisonBlock()),
             ("testimonials", TestimonialBlock()),
             ("faq", FAQBlock()),
+            ("partners", PartnerLogoBlock()),
             ("grid", GridBlock()),
         ],
         use_json_field=True,

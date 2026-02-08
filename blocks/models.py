@@ -180,6 +180,38 @@ class ComparisonBlock(blocks.StructBlock):
         label = "Comparison/Pricing Table"
 
 
+@register_snippet
+class Partner(models.Model):
+    name = models.CharField(max_length=255)
+    logo = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    website = models.URLField(blank=True, null=True)
+
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("logo"),
+        FieldPanel("website"),
+    ]
+
+    def __str__(self):
+        return self.name
+
+
+class PartnerLogoBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False, default="Trusted By")
+    partners = blocks.ListBlock(SnippetChooserBlock(Partner))
+
+    class Meta:
+        template = "blocks/partner_logo_block.html"
+        icon = "group"
+        label = "Partner Logo Block"
+
+
 class ColumnBlock(blocks.StreamBlock):
     hero = HeroBlock(icon="user")
     about = AboutBlock(icon="doc-full")
@@ -194,6 +226,7 @@ class ColumnBlock(blocks.StreamBlock):
     tier = TierBlock(icon="pick")
     comparison = ComparisonBlock(icon="table")
     faq = FAQBlock(icon="help")
+    partner_logo = PartnerLogoBlock(icon="group")
 
     class Meta:
         label = "Columns Content"

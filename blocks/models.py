@@ -3,7 +3,8 @@ from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.snippets.blocks import SnippetChooserBlock
 from wagtail.snippets.models import register_snippet
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.fields import StreamField
 
 
 class FAQItemBlock(blocks.StructBlock):
@@ -212,21 +213,110 @@ class PartnerLogoBlock(blocks.StructBlock):
         label = "Partner Logo Block"
 
 
+class SocialFieldsMixin(models.Model):
+    email = models.EmailField(
+        blank=True, null=True, help_text="Enter your email address"
+    )
+    linkedin = models.URLField(
+        blank=True, null=True, help_text="Enter your LinkedIn profile URL"
+    )
+    github = models.URLField(
+        blank=True, null=True, help_text="Enter your GitHub profile URL"
+    )
+    twitter = models.URLField(
+        blank=True, null=True, help_text="Enter your Twitter profile URL"
+    )
+    facebook = models.URLField(
+        blank=True, null=True, help_text="Enter your Facebook profile URL"
+    )
+    instagram = models.URLField(
+        blank=True, null=True, help_text="Enter your Instagram profile URL"
+    )
+    phone = models.CharField(
+        blank=True,
+        null=True,
+        max_length=50,
+        help_text="International format (e.g. +12345234567)",
+    )
+    telegram_username = models.CharField(
+        blank=True,
+        null=True,
+        max_length=100,
+        help_text="Your username without the @ (e.g. username)",
+    )
+    extra_links = StreamField(
+        [
+            ("social_link", SocialLinkBlock()),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
+    social_panels = [
+        FieldPanel("email"),
+        FieldPanel("linkedin"),
+        FieldPanel("github"),
+        FieldPanel("twitter"),
+        FieldPanel("facebook"),
+        FieldPanel("instagram"),
+        FieldPanel("phone"),
+        FieldPanel("telegram_username"),
+        FieldPanel("extra_links"),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+@register_snippet
+class TeamMember(SocialFieldsMixin):
+    name = models.CharField(max_length=255)
+    role = models.CharField(max_length=255, blank=True)
+    image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+    biography = models.TextField(blank=True)
+    panels = [
+        FieldPanel("name"),
+        FieldPanel("role"),
+        FieldPanel("image"),
+        FieldPanel("biography"),
+        MultiFieldPanel(SocialFieldsMixin.social_panels, "Social"),
+    ]
+
+    def __str__(self):
+        return self.name
+
+
+class TeamMemberBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False, default="My Team")
+    team_members = blocks.ListBlock(SnippetChooserBlock(TeamMember))
+
+    class Meta:
+        template = "blocks/team_member_block.html"
+        icon = "user"
+        label = "Team Member Block"
+
+
 class ColumnBlock(blocks.StreamBlock):
-    hero = HeroBlock(icon="user")
-    about = AboutBlock(icon="doc-full")
+    hero_block = HeroBlock(icon="user")
+    about_block = AboutBlock(icon="doc-full")
     heading = blocks.CharBlock(icon="title")
     paragraph = blocks.RichTextBlock(icon="pilcrow")
     image = ImageChooserBlock(icon="image")
-    contact_form = ContactFormBlock(icon="mail")
-    testimonial = TestimonialBlock(icon="openquote")
-    featured_projects = FeaturedProjectsBlock(icon="pick")
-    service = ServiceBlock(icon="tick-inverse")
-    services_list = ServicesListBlock(icon="list-ul")
-    tier = TierBlock(icon="pick")
-    comparison = ComparisonBlock(icon="table")
-    faq = FAQBlock(icon="help")
-    partner_logo = PartnerLogoBlock(icon="group")
+    contact_form_block = ContactFormBlock(icon="mail")
+    testimonial_block = TestimonialBlock(icon="openquote")
+    featured_projects_block = FeaturedProjectsBlock(icon="pick")
+    service_block = ServiceBlock(icon="tick-inverse")
+    services_list_block = ServicesListBlock(icon="list-ul")
+    tier_block = TierBlock(icon="pick")
+    comparison_block = ComparisonBlock(icon="table")
+    faq_block = FAQBlock(icon="help")
+    partner_logo_block = PartnerLogoBlock(icon="group")
+    team_member_block = TeamMemberBlock(icon="user")
 
     class Meta:
         label = "Columns Content"

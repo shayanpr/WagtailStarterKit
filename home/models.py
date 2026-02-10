@@ -14,11 +14,12 @@ from blocks.models import (
     AboutBlock,
     FeaturedProjectsBlock,
     ContactBlock,
-    SocialLinkBlock,
+    SocialFieldsMixin,
     ComparisonBlock,
     TestimonialBlock,
     FAQBlock,
     PartnerLogoBlock,
+    TeamMemberBlock,
 )
 
 
@@ -52,47 +53,8 @@ class ContactPage(AbstractEmailForm):
 
 
 @register_setting
-class SocialMediaSettings(BaseSiteSetting):
-    email = models.EmailField(
-        blank=True, null=True, help_text="Enter your email address"
-    )
-    linkedin = models.URLField(
-        blank=True, null=True, help_text="Enter your LinkedIn profile URL"
-    )
-    github = models.URLField(
-        blank=True, null=True, help_text="Enter your GitHub profile URL"
-    )
-    twitter = models.URLField(
-        blank=True, null=True, help_text="Enter your Twitter profile URL"
-    )
-    whatsapp = models.CharField(
-        blank=True,
-        null=True,
-        max_length=50,
-        help_text="International format (e.g. +12345234567)",
-    )
-    telegram_username = models.CharField(
-        blank=True,
-        null=True,
-        max_length=100,
-        help_text="Your username without the @ (e.g. username)",
-    )
-    extra_links = StreamField(
-        [
-            ("social_link", SocialLinkBlock()),
-        ],
-        blank=True,
-        use_json_field=True,
-    )
-    panels = [
-        FieldPanel("email"),
-        FieldPanel("linkedin"),
-        FieldPanel("github"),
-        FieldPanel("twitter"),
-        FieldPanel("whatsapp"),
-        FieldPanel("telegram_username"),
-        FieldPanel("extra_links"),
-    ]
+class SocialMediaSettings(BaseSiteSetting, SocialFieldsMixin):
+    panels = [MultiFieldPanel(SocialFieldsMixin.social_panels, "Social Media Links")]
 
     class Meta:
         verbose_name = "Social Media Settings"
@@ -171,6 +133,7 @@ class HomePage(Page):
             ("testimonials", TestimonialBlock()),
             ("faq", FAQBlock()),
             ("partners", PartnerLogoBlock()),
+            ("team", TeamMemberBlock()),
             ("grid", GridBlock()),
         ],
         use_json_field=True,
@@ -194,6 +157,7 @@ class FlexPage(Page):
             ("testimonials", TestimonialBlock()),
             ("faq", FAQBlock()),
             ("partners", PartnerLogoBlock()),
+            ("team", TeamMemberBlock()),
             ("grid", GridBlock()),
         ],
         use_json_field=True,

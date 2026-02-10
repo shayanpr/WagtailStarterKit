@@ -22,10 +22,10 @@
 - [ ] **Case Study Model:** A variation of `ProjectPage` focused on "Problem -> Solution -> ROI/Results".
 
 ## 💼 Agency Operations (Public vs. Private)
-- [ ] **Public Repo Cleanup:**
-    - [ ] Add `gemini.md` to `.git/info/exclude`.
-    - [ ] Run `git filter-repo` to purge `seed_data.py`, `content_data.py`, and `gemini.md` history.
-    - [ ] Force-push cleaned history to public origin.
+- [x] **Public Repo Cleanup:**
+    - [x] Add `gemini.md` to `.git/info/exclude`.
+    - [x] Run `git filter-repo` to purge `seed_data.py`, `content_data.py`, and `gemini.md` history.
+    - [x] Force-push cleaned history to public origin.
 - [ ] **Private Mirror Setup:**
     - [ ] Create a dedicated private repository for full agency automation.
     - [ ] Document the `git pull public main` workflow for syncing features.

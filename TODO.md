@@ -3,7 +3,7 @@
 ## 🚀 High Priority (Core Features)
 - [x] **Contact Page Model:** Implemented `AbstractEmailForm` with custom field builder.
 - [x] **Project Tagging:** Integrated `django-taggit` with smart filtering on `ProjectIndexPage`.
-- [ ] **About Us Page:** Create a dedicated model for About pages.
+- [x] **About Us Page:** Create a dedicated model for About pages.
     - [x] **Team Members:** Implement `TeamMember` snippet and a `TeamGridBlock`.
 - [ ] **Blog / News App:** Dedicated app for articles, updates, and tutorials.
     - [ ] **Models:** `BlogIndexPage` (Listing) and `BlogPage` (Article).
@@ -49,4 +49,4 @@
 - [x] **Code Reorganization:** Moved blocks to a dedicated `blocks` app for better modularity.
 - [x] **Image Optimization:** Implemented WebP format and specific crops (fill/width) across all templates.
 - [ ] **Documentation:** Update `README.md` with instructions on how to use the new Form, Tagging, and Comparison features.
-- [ ] **Search:** Implement a working search results page template.
+- [x] **Search:** Implement a working search results page template.

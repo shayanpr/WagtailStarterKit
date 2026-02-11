@@ -64,8 +64,29 @@
 
         {# Main Content: The Story #}
         <div class="lg:col-span-8 lg:col-start-5">
-            {# The Body Content (StreamField) #}
-            <div class="mb-24">
+            
+            {# --- Gallery Grid (Orderables) --- #}
+            {% if page.gallery_images.all %}
+                <div class="mb-20">
+                    <h3 class="text-2xl font-bold mb-10 text-gray-900">Project Gallery</h3>
+                    
+                    <div class="space-y-12">
+                        {% for item in page.gallery_images.all %}
+                            <figure class="bg-gray-50 rounded-3xl overflow-hidden shadow-sm border border-gray-100">
+                                {% image item.image width-1200 format-webp class="w-full h-auto" %}
+                                {% if item.caption %}
+                                    <figcaption class="p-6 text-center text-sm text-gray-500 italic bg-white border-t border-gray-50">
+                                        {{ item.caption }}
+                                    </figcaption>
+                                {% endif %}
+                            </figure>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {# The Body Content (StreamField) - Moved below gallery #}
+            <div class="mb-24 border-t border-gray-100 pt-16">
                 {% for block in page.body %}
                     {% if block.block_type == 'paragraph' %}
                         <div class="prose prose-lg md:prose-xl text-gray-600 max-w-none mb-8">
@@ -79,26 +100,6 @@
                     {% endif %}
                 {% endfor %}
             </div>
-
-            {# --- Gallery Grid (Orderables) --- #}
-            {% if page.gallery_images.all %}
-                <div class="border-t border-gray-100 pt-16">
-                    <h3 class="text-2xl font-bold mb-10 text-gray-900">Project Gallery</h3>
-                    
-                    <div class="space-y-12">
-                        {% for item in page.gallery_images.all %}
-                            <figure class="bg-gray-50 rounded-xl overflow-hidden shadow-sm">
-                                {% image item.image width-1200 format-webp class="w-full h-auto" %}
-                                {% if item.caption %}
-                                    <figcaption class="p-4 text-center text-sm text-gray-500 italic">
-                                        {{ item.caption }}
-                                    </figcaption>
-                                {% endif %}
-                            </figure>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
         </div>
     </div>
 

@@ -167,3 +167,45 @@ class FlexPage(Page):
         FieldPanel("body"),
     ]
     template = "home/home_page.html"
+
+
+class AboutPage(Page):
+    hero_text = models.CharField(max_length=255, blank=True)
+    hero_image = models.ForeignKey(
+        "wagtailimages.Image",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
+    )
+
+    description = RichTextField(blank=True)
+    body = StreamField(
+        [
+            ("hero", HeroBlock()),
+            ("about", AboutBlock()),
+            ("services", ServicesListBlock()),
+            ("showcase", FeaturedProjectsBlock()),
+            ("contact", ContactBlock()),
+            ("contact_form", ContactFormBlock()),
+            ("comparison", ComparisonBlock()),
+            ("testimonials", TestimonialBlock()),
+            ("faq", FAQBlock()),
+            ("partners", PartnerLogoBlock()),
+            ("team", TeamMemberBlock()),
+            ("grid", GridBlock()),
+        ],
+        use_json_field=True,
+    )
+
+    content_panels = Page.content_panels + [
+        MultiFieldPanel(
+            [
+                FieldPanel("hero_text"),
+                FieldPanel("hero_image"),
+                FieldPanel("description"),
+            ],
+            heading="Hero Section",
+        ),
+        FieldPanel("body"),
+    ]

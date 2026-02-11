@@ -4,7 +4,7 @@
 - [x] **Contact Page Model:** Implemented `AbstractEmailForm` with custom field builder.
 - [x] **Project Tagging:** Integrated `django-taggit` with smart filtering on `ProjectIndexPage`.
 - [ ] **About Us Page:** Create a dedicated model for About pages.
-    - [ ] **Team Members:** Implement `TeamMember` snippet and a `TeamGridBlock`.
+    - [x] **Team Members:** Implement `TeamMember` snippet and a `TeamGridBlock`.
 - [ ] **Blog / News App:** Dedicated app for articles, updates, and tutorials.
     - [ ] **Models:** `BlogIndexPage` (Listing) and `BlogPage` (Article).
     - [ ] **Taxonomy:** Categories and Tags support.

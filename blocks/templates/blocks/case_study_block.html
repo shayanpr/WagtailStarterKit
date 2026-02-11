@@ -1,0 +1,55 @@
+{% load wagtailcore_tags %}
+
+<section class="py-24 bg-gray-50">
+    <div class="container mx-auto px-6 max-w-5xl">
+        
+        {# Optional Featured Badge #}
+        {% if self.is_featured %}
+            <div class="flex justify-center mb-8">
+                <span class="bg-blue-600 text-white text-xs font-bold uppercase tracking-widest px-4 py-1 rounded-full">
+                    Featured Case Study
+                </span>
+            </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            
+            {# The Problem #}
+            {% if self.problem %}
+                <div class="bg-white p-10 rounded-3xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span class="text-red-500">●</span> The Problem
+                    </h3>
+                    <div class="prose prose-sm text-gray-600">
+                        {{ self.problem|richtext }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {# The Solution #}
+            {% if self.solution %}
+                <div class="bg-white p-10 rounded-3xl shadow-sm border border-gray-100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span class="text-blue-500">●</span> Our Solution
+                    </h3>
+                    <div class="prose prose-sm text-gray-600">
+                        {{ self.solution|richtext }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {# The Results #}
+            {% if self.results %}
+                <div class="bg-white p-10 rounded-3xl shadow-sm border border-blue-100 bg-blue-50/30">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        <span class="text-green-500">●</span> The Results
+                    </h3>
+                    <div class="prose prose-sm text-gray-600">
+                        {{ self.results|richtext }}
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>

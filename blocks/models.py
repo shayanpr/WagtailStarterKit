@@ -335,6 +335,18 @@ class CallToActionBlock(blocks.StructBlock):
         label = "Call to Action Block"
 
 
+class CaseStudyBlock(blocks.StructBlock):
+    problem = blocks.RichTextBlock(required=False)
+    solution = blocks.RichTextBlock(required=False)
+    results = blocks.RichTextBlock(required=False)
+    is_featured = blocks.BooleanBlock(required=False, default=False)
+
+    class Meta:
+        template = "blocks/case_study_block.html"
+        icon = "doc-full"
+        label = "Case Study Block"
+
+
 class ColumnBlock(blocks.StreamBlock):
     hero_block = HeroBlock(icon="user")
     about_block = AboutBlock(icon="doc-full")
@@ -353,6 +365,7 @@ class ColumnBlock(blocks.StreamBlock):
     team_member_block = TeamMemberBlock(icon="user")
     stats_block = StatsBlock(icon="order")
     cta_block = CallToActionBlock(icon="link")
+    case_study_block = CaseStudyBlock(icon="doc-full")
 
     class Meta:
         label = "Columns Content"

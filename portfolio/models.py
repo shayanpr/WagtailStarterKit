@@ -1,10 +1,12 @@
 from django.db import models
+from wagtail import blocks
 from wagtail.models import Page, Orderable
-from wagtail.fields import RichTextField
+from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase, Tag
+from blocks.models import CaseStudyBlock
 
 
 class ProjectIndexPage(Page):
@@ -48,7 +50,14 @@ class ProjectPageTag(TaggedItemBase):
 class ProjectPage(Page):
     client = models.CharField(max_length=200)
     date = models.DateField("Project date")
-    body = RichTextField(blank=True)
+    body = StreamField(
+        [
+            ("case_study_block", CaseStudyBlock()),
+            ("paragraph", blocks.RichTextBlock()),
+        ],
+        use_json_field=True,
+        blank=True,
+    )
     main_image = models.ForeignKey(
         "wagtailimages.Image",
         null=True,

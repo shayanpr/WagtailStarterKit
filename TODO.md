@@ -19,7 +19,7 @@
 - [ ] **Sales & Service:**
     - [x] **Global CTA:** A reusable "Call to Action" strip for the footer or page bottom.
     - [x] **Stats Block:** A grid of animated numbers (e.g., "99.9% Uptime", "10k Users").
-- [ ] **Case Study Model:** A variation of `ProjectPage` focused on "Problem -> Solution -> ROI/Results".
+- [x] **Case Study Model:** A variation of `ProjectPage` focused on "Problem -> Solution -> ROI/Results".
 
 ## 💼 Agency Operations (Public vs. Private)
 - [x] **Public Repo Cleanup:**

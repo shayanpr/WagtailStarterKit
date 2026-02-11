@@ -22,6 +22,7 @@ from blocks.models import (
     TeamMemberBlock,
     StatsBlock,
     CallToActionBlock,
+    CaseStudyBlock,
 )
 
 
@@ -139,6 +140,7 @@ class BaseStreamBlockMixin(models.Model):
             ("grid_block", GridBlock()),
             ("stats_block", StatsBlock()),
             ("cta_block", CallToActionBlock()),
+            ("case_study_block", CaseStudyBlock()),
         ],
         use_json_field=True,
     )

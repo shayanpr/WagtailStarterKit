@@ -64,9 +64,20 @@
 
         {# Main Content: The Story #}
         <div class="lg:col-span-8 lg:col-start-5">
-            {# The Body Text #}
-            <div class="prose prose-lg md:prose-xl text-gray-600 max-w-none mb-24">
-                {{ page.body|richtext }}
+            {# The Body Content (StreamField) #}
+            <div class="mb-24">
+                {% for block in page.body %}
+                    {% if block.block_type == 'paragraph' %}
+                        <div class="prose prose-lg md:prose-xl text-gray-600 max-w-none mb-8">
+                            {{ block.value|richtext }}
+                        </div>
+                    {% else %}
+                        {# Specialized blocks like Case Study break out for more impact #}
+                        <div class="-mx-6 md:-mx-12 lg:-mx-24 mb-16">
+                            {% include_block block %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
             </div>
 
             {# --- Gallery Grid (Orderables) --- #}

@@ -43,28 +43,25 @@
         
         {# Loop through the filtered 'projects' list from get_context #}
         {% for project in projects %}
-            <a href="{% pageurl project %}" class="group block bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1">
+            <a href="{% pageurl project %}" class="group block bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
                 
                 {# Card Image #}
                 <div class="relative h-64 overflow-hidden bg-gray-100">
                     {% if project.main_image %}
-                        {% image project.main_image fill-800x600 format-webp class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" %}
+                        {% image project.main_image fill-800x600 format-webp class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" %}
                     {% else %}
                         {# Placeholder if no image #}
                         <div class="w-full h-full flex items-center justify-center text-gray-400">
                             No Image
                         </div>
                     {% endif %}
-                    
-                    {# Overlay on Hover #}
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
                 </div>
 
                 {# Card Content #}
                 <div class="p-8">
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-xs font-bold uppercase tracking-widest text-blue-600">
-                            {{ project.client|default:"Personal Project" }}
+                            {{ project.client|default:"Project" }}
                         </span>
                         {% if project.date %}
                             <span class="text-xs text-gray-400">

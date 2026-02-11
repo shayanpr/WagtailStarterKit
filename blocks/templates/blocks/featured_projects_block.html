@@ -18,31 +18,36 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             {% for project in self.projects %}
             {# 'project' is the Page object itself #}
-            <a href="{% pageurl project %}" class="group block bg-white">
+            <a href="{% pageurl project %}" class="group block bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
                 {# Image #}
                 <div class="relative h-64 overflow-hidden bg-gray-200">
-                    {%if project.main_image %}
-                        {% image project.main_image fill-800x600-c100 format-webp class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" %}
+                    {% if project.main_image %}
+                        {% image project.main_image fill-800x600-c100 format-webp class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" %}
                     {% else %}
-                        <div class="flex item-center justify-center h-full text-gray-400">No Image</div>
-                    {%endif%}
+                        <div class="flex items-center justify-center h-full text-gray-400">No Image</div>
+                    {% endif %}
                 </div>
                 {# Content #}
-                <div class="p-6">
-                    <div class="flex item-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase text-blue-600 tracking-wider">
-                            {{project.client| default:"Project"}}
+                <div class="p-8">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold uppercase text-blue-600 tracking-widest">
+                            {{ project.client|default:"Project" }}
                         </span>
+                        {% if project.date %}
+                            <span class="text-xs text-gray-400">{{ project.date|date:"Y" }}</span>
+                        {% endif %}
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{{project.title}}</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        {{ project.title }}
+                    </h3>
                 </div>
             </a>
-
-            {%endfor%}
+            {% endfor %}
         </div>
-        {# View All Linkes #}
-        <div class="text-center mt-12">
-            <a href="/work/" class="inline-flex items-center font-bold text-gray-900 hover:text-blue-600 transition-colors border-b-2 border-transparent hover:border-blue-600 pb-1">
+
+        {# View All Link #}
+        <div class="text-center mt-16">
+            <a href="/work/" class="inline-block px-8 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all transform hover:scale-105 shadow-md">
                 View All Projects &rarr;
             </a>
         </div>

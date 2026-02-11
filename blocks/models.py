@@ -301,6 +301,26 @@ class TeamMemberBlock(blocks.StructBlock):
         label = "Team Member Block"
 
 
+class StatItemBlock(blocks.StructBlock):
+    value = blocks.CharBlock()
+    text = blocks.CharBlock()
+    icon = ImageChooserBlock(required=False)
+
+    class Meta:
+        icon = "pick"
+        label = "Stat Item"
+
+
+class StatsBlock(blocks.StructBlock):
+    heading = blocks.CharBlock(required=False, default="My Stats")
+    stats = blocks.ListBlock(StatItemBlock())
+
+    class Meta:
+        template = "blocks/stats_block.html"
+        icon = "order"
+        label = "Stats Block"
+
+
 class ColumnBlock(blocks.StreamBlock):
     hero_block = HeroBlock(icon="user")
     about_block = AboutBlock(icon="doc-full")
@@ -317,6 +337,7 @@ class ColumnBlock(blocks.StreamBlock):
     faq_block = FAQBlock(icon="help")
     partner_logo_block = PartnerLogoBlock(icon="group")
     team_member_block = TeamMemberBlock(icon="user")
+    stats_block = StatsBlock(icon="order")
 
     class Meta:
         label = "Columns Content"

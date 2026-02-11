@@ -20,6 +20,7 @@ from blocks.models import (
     FAQBlock,
     PartnerLogoBlock,
     TeamMemberBlock,
+    StatsBlock,
 )
 
 
@@ -135,6 +136,7 @@ class BaseStreamBlockMixin(models.Model):
             ("partner_logo_block", PartnerLogoBlock()),
             ("team_member_block", TeamMemberBlock()),
             ("grid_block", GridBlock()),
+            ("stats_block", StatsBlock()),
         ],
         use_json_field=True,
     )

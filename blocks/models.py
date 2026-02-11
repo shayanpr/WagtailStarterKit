@@ -321,6 +321,20 @@ class StatsBlock(blocks.StructBlock):
         label = "Stats Block"
 
 
+class CallToActionBlock(blocks.StructBlock):
+    title = blocks.CharBlock(required=False, default="Ready to get started?")
+    subtitle = blocks.TextBlock(required=False)
+    button_text = blocks.CharBlock(required=False)
+    button_link = blocks.PageChooserBlock(required=False)
+    background_image = ImageChooserBlock(required=False)
+    is_dark = blocks.BooleanBlock(required=False, default=True)
+
+    class Meta:
+        template = "blocks/call_to_action_block.html"
+        icon = "link"
+        label = "Call to Action Block"
+
+
 class ColumnBlock(blocks.StreamBlock):
     hero_block = HeroBlock(icon="user")
     about_block = AboutBlock(icon="doc-full")
@@ -338,6 +352,7 @@ class ColumnBlock(blocks.StreamBlock):
     partner_logo_block = PartnerLogoBlock(icon="group")
     team_member_block = TeamMemberBlock(icon="user")
     stats_block = StatsBlock(icon="order")
+    cta_block = CallToActionBlock(icon="link")
 
     class Meta:
         label = "Columns Content"

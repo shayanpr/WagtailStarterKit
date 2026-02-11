@@ -1,0 +1,42 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<section class="py-24 relative overflow-hidden {% if self.is_dark %}bg-gray-900 text-white{% else %}bg-gray-50 text-gray-900{% endif %}">
+    
+    {# Optional Background Image #}
+    {% if self.background_image %}
+        <div class="absolute inset-0 z-0 opacity-20">
+            {% image self.background_image fill-1920x600 format-webp as bg_img %}
+            <img src="{{ bg_img.url }}" alt="{{ bg_img.alt }}" class="w-full h-full object-cover">
+        </div>
+    {% endif %}
+
+    <div class="relative z-10 container mx-auto px-6 text-center">
+        <div class="max-w-3xl mx-auto">
+            
+            {% if self.title %}
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+                    {{ self.title }}
+                </h2>
+            {% endif %}
+
+            {% if self.subtitle %}
+                <p class="text-xl {% if self.is_dark %}text-gray-400{% else %}text-gray-600{% endif %} mb-10 leading-relaxed">
+                    {{ self.subtitle }}
+                </p>
+            {% endif %}
+
+            {% if self.button_link and self.button_text %}
+                <a href="{% pageurl self.button_link %}" 
+                   class="inline-block px-10 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 shadow-lg
+                   {% if self.is_dark %}
+                       bg-white text-gray-900 hover:bg-gray-200
+                   {% else %}
+                       bg-blue-600 text-white hover:bg-blue-700
+                   {% endif %}">
+                    {{ self.button_text }}
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+</section>

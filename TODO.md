@@ -17,7 +17,7 @@
     - [x] **Testimonials Snippet:** Manage client quotes centrally and select them via `TestimonialBlock`.
     - [x] **Partner Logo Grid:** A "Trusted By" block for displaying client logos using `Partner` snippets.
 - [ ] **Sales & Service:**
-    - [ ] **Global CTA:** A reusable "Call to Action" strip for the footer or page bottom.
+    - [x] **Global CTA:** A reusable "Call to Action" strip for the footer or page bottom.
     - [x] **Stats Block:** A grid of animated numbers (e.g., "99.9% Uptime", "10k Users").
 - [ ] **Case Study Model:** A variation of `ProjectPage` focused on "Problem -> Solution -> ROI/Results".
 

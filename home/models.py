@@ -21,6 +21,7 @@ from blocks.models import (
     PartnerLogoBlock,
     TeamMemberBlock,
     StatsBlock,
+    CallToActionBlock,
 )
 
 
@@ -137,6 +138,7 @@ class BaseStreamBlockMixin(models.Model):
             ("team_member_block", TeamMemberBlock()),
             ("grid_block", GridBlock()),
             ("stats_block", StatsBlock()),
+            ("cta_block", CallToActionBlock()),
         ],
         use_json_field=True,
     )

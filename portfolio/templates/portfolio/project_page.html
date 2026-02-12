@@ -67,20 +67,58 @@
             
             {# --- Gallery Grid (Orderables) --- #}
             {% if page.gallery_images.all %}
-                <div class="mb-20">
+                <div class="mb-20" x-data="{ spotlightOpen: false, activeImage: '' }">
                     <h3 class="text-2xl font-bold mb-10 text-gray-900">Project Gallery</h3>
                     
-                    <div class="space-y-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {% for item in page.gallery_images.all %}
-                            <figure class="bg-gray-50 rounded-3xl overflow-hidden shadow-sm border border-gray-100">
-                                {% image item.image width-1200 format-webp class="w-full h-auto" %}
+                            <figure class="cursor-pointer group relative overflow-hidden rounded-3xl border border-gray-100 shadow-sm transition-all hover:shadow-xl"
+                                    @click="spotlightOpen = true; activeImage = '{{ item.id }}'">
+                                
+                                {% image item.image fill-800x600 format-webp as thumb %}
+                                <img src="{{ thumb.url }}" alt="{{ item.caption }}" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
+                                
+                                {# Hover Icon Overlay #}
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                                    </svg>
+                                </div>
+
                                 {% if item.caption %}
-                                    <figcaption class="p-6 text-center text-sm text-gray-500 italic bg-white border-t border-gray-50">
-                                        {{ item.caption }}
-                                    </figcaption>
+                                    <figcaption class="sr-only">{{ item.caption }}</figcaption>
                                 {% endif %}
                             </figure>
                         {% endfor %}
+                    </div>
+
+                    {# --- Spotlight Modal --- #}
+                    <div x-show="spotlightOpen" 
+                         x-transition.opacity.duration.300ms
+                         class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6"
+                         @keydown.escape.window="spotlightOpen = false"
+                         @click.away="spotlightOpen = false"
+                         style="display: none;">
+                        
+                        {# Close Button #}
+                        <button @click="spotlightOpen = false" class="absolute top-10 right-10 text-white/70 hover:text-white transition-colors">
+                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+
+                        {# Image Container #}
+                        <div class="max-w-6xl w-full h-full flex flex-col justify-center items-center">
+                            {% for item in page.gallery_images.all %}
+                                <template x-if="activeImage === '{{ item.id }}'">
+                                    <div class="flex flex-col items-center">
+                                        {% image item.image width-1600 format-webp as full_img %}
+                                        <img src="{{ full_img.url }}" class="max-w-full max-h-[80vh] rounded-2xl shadow-2xl">
+                                        {% if item.caption %}
+                                            <p class="text-white/80 text-center mt-8 text-xl italic font-light">{{ item.caption }}</p>
+                                        {% endif %}
+                                    </div>
+                                </template>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             {% endif %}

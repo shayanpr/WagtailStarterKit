@@ -11,21 +11,23 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
             {% for item in self.stats %}
+            <div class="flex flex-col h-full reveal">
                 <div class="flex flex-col items-center text-center p-10 bg-white rounded-3xl border border-gray-100 shadow-sm transition-all hover:shadow-lg hover:-translate-y-1">
                     
                     {% if item.icon %}
-                        <div class="mb-8 w-20 h-20 rounded-3xl bg-blue-50 flex items-center justify-center">
+                        <div class="mb-8 w-20 h-20 rounded-3xl bg-blue-50 flex items-center justify-center reveal">
                             {% image item.icon fill-100x100 format-webp class="w-12 h-12 object-contain" %}
                         </div>
                     {% endif %}
 
-                    <div class="text-5xl font-extrabold text-blue-600 mb-2">
+                    <div class="text-5xl font-extrabold text-blue-600 mb-2 reveal">
                         {{ item.value }}
                     </div>
 
-                    <div class="text-sm font-bold uppercase tracking-widest text-gray-400">
+                    <div class="text-sm font-bold uppercase tracking-widest text-gray-400 reveal">
                         {{ item.text }}
                     </div>
+                </div>
                 </div>
             {% endfor %}
         </div>

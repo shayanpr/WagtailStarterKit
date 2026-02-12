@@ -5,16 +5,15 @@
         
         {% if self.is_featured %}
             <div class="flex justify-center mb-10">
-                <span class="bg-blue-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full">
+                <span class="bg-blue-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full reveal">
                     Project Deep Dive
                 </span>
             </div>
         {% endif %}
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
             {# The Problem #}
-            <div class="flex flex-col h-full bg-white p-8 rounded-2xl shadow-sm">
+            <div class="flex flex-col h-full bg-white p-8 rounded-2xl shadow-sm reveal">
                 <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-red-400"></span> The Problem
                 </h3>
@@ -24,7 +23,7 @@
             </div>
 
             {# The Solution #}
-            <div class="flex flex-col h-full bg-white p-8 rounded-2xl shadow-sm">
+            <div class="flex flex-col h-full bg-white p-8 rounded-2xl shadow-sm reveal">
                 <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-blue-400"></span> Our Solution
                 </h3>
@@ -34,7 +33,7 @@
             </div>
 
             {# The Results #}
-            <div class="flex flex-col h-full bg-blue-600 p-8 rounded-2xl shadow-lg transform md:-translate-y-2">
+            <div class="flex flex-col h-full bg-blue-600 p-8 rounded-2xl shadow-lg reveal ">
                 <h3 class="text-sm font-bold text-blue-200 uppercase tracking-widest mb-4 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-white"></span> The Results
                 </h3>

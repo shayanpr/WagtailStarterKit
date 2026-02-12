@@ -15,6 +15,7 @@
         {# Accordion Container #}
         <div class="space-y-4">
             {% for item in value.items %}
+                <div class="reveal-fast">
                 <details class="group bg-gray-50 rounded-2xl border border-gray-100 overflow-hidden transition-all duration-300 open:bg-white open:shadow-xl open:border-black">
                     
                     {# Question (Trigger) #}
@@ -36,6 +37,7 @@
                     </div>
                     
                 </details>
+            </div>
             {% endfor %}
         </div>
     </div>

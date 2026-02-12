@@ -15,8 +15,9 @@
         </div>
 
         {# Project Grid #}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 reveal-fast">
             {% for project in self.projects %}
+            <div class="reveal-fast">
             {# 'project' is the Page object itself #}
             <a href="{% pageurl project %}" class="group block bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
                 {# Image #}
@@ -42,11 +43,12 @@
                     </h3>
                 </div>
             </a>
+        </div>
             {% endfor %}
         </div>
 
         {# View All Link #}
-        <div class="text-center mt-16">
+        <div class="text-center mt-16 reveal">
             <a href="/work/" class="inline-block px-8 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all transform hover:scale-105 shadow-md">
                 View All Projects &rarr;
             </a>

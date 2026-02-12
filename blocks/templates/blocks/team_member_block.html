@@ -11,10 +11,12 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {% for member in self.team_members %}
-                <div class="flex flex-col items-center bg-gray-50 p-10 rounded-3xl border border-gray-100 hover:shadow-xl transition-all duration-300">
+
+                <div class="flex flex-col h-full reveal">
+                <div class="flex flex-col h-full items-center bg-gray-50 p-10 rounded-3xl border border-gray-100 hover:shadow-xl transition-all duration-300">
                     
                     {# Profile Image #}
-                    <div class="mb-8">
+                    <div class="mb-8 reveal">
                         {% if member.image %}
                             <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
                                 {% image member.image fill-200x200 format-webp as member_img %}
@@ -30,7 +32,7 @@
                     </div>
 
                     {# Member Details #}
-                    <div class="text-center mb-6">
+                    <div class="text-center mb-6 reveal">
                         <h3 class="text-2xl font-bold text-gray-900 mb-2">
                             {{ member.name }}
                         </h3>
@@ -43,13 +45,13 @@
 
                     {# Bio #}
                     {% if member.biography %}
-                        <p class="text-gray-600 text-center leading-relaxed mb-8">
+                        <p class="text-gray-600 text-center leading-relaxed mb-8 reveal">
                             {{ member.biography }}
                         </p>
                     {% endif %}
 
                     {# Social Links #}
-                    <div class="mt-auto flex flex-wrap justify-center gap-6 text-gray-400">
+                    <div class="mt-auto flex flex-wrap justify-center gap-6 text-gray-400 reveal">
                         {% if member.email %}
                             <a href="mailto:{{ member.email }}" class="hover:text-blue-600 transition-colors" title="Email">
                                 <span class="sr-only">Email</span>
@@ -84,6 +86,7 @@
                             </a>
                         {% endfor %}
                     </div>
+                </div>
                 </div>
             {% endfor %}
         </div>

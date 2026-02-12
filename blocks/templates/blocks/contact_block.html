@@ -2,13 +2,13 @@
 {% load wagtailsettings_tags %}
 {% get_settings %}
 <section class="py-24 bg-gray-900 text-white text-center">
-    <div class="container mx-auto px-6">
-       <h2 class="text-4xl font-bold mb-6">{{self.heading}}</h2> 
-       <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+    <div class="container mx-auto px-6 reveal">
+       <h2 class="text-4xl font-bold mb-6 reveal">{{self.heading}}</h2> 
+       <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto reveal">
         {{self.text}}
        </p>
 
-       <div class="flex justify-center gap-8 items-center text-lg font-medium">
+       <div class="flex justify-center gap-8 items-center text-lg font-medium reveal">
 
         {% if settings.home.SocialMediaSettings.email %}
             <a href="mailto:{{settings.home.SocialMediaSettings.email}}" class="hover:text-blue-400 transition-colors">Email</a>

@@ -1,7 +1,7 @@
 {% load wagtailcore_tags %}
 
 <section class="py-20 bg-gray-50">
-    <div class="container mx-auto px-6 max-w-3xl">
+    <div class="container mx-auto px-6 max-w-3xl reveal">
         <div class="bg-white p-12 rounded-3xl shadow-sm border border-gray-100">
             
             <h2 class="text-4xl font-bold tracking-tight mb-4 text-center">{{ value.heading }}</h2>
@@ -10,13 +10,13 @@
             {% endif %}
 
             {# We point the action to the real ContactPage #}
-            <form action="{% pageurl value.form_page %}" method="POST" class="space-y-6">
+            <form action="{% pageurl value.form_page %}" method="POST" class="space-y-6 reveal">
                 {% csrf_token %}
                 
                 <div class="grid grid-cols-1 gap-6">
                     {# We reach into the linked page and grab its fields #}
                     {% for field in value.form_page.form_fields.all %}
-                        <div class="flex flex-col gap-2">
+                        <div class="flex flex-col gap-2 reveal">
                             <label class="font-medium text-gray-700">
                                 {{ field.label }}{% if field.required %}<span class="text-red-500">*</span>{% endif %}
                             </label>
@@ -34,7 +34,7 @@
                     {% endfor %}
                 </div>
 
-                <button type="submit" class="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-lg mt-8">
+                <button type="submit" class="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-lg mt-8 reveal">
                     Send Message
                 </button>
             </form>

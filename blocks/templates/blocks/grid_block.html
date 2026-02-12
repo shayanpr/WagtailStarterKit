@@ -11,7 +11,7 @@
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     {# Each column is a StreamBlock, so we loop through and render its sub-blocks #}
                     {% for block in column %}
-                        <div class="mb-4 last:mb-0">
+                        <div class="mb-4 last:mb-0 reveal">
                             {% include_block block %}
                         </div>
                     {% endfor %}

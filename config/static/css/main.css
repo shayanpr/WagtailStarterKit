@@ -1,0 +1,52 @@
+/* Animation Base State */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+/* Fast Reveal Variant */
+.reveal-fast {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.6s ease-out;
+}
+
+/* Animation Active State */
+.revealed {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* Standard Staggered Delays (150ms steps) */
+.reveal:nth-child(1) { transition-delay: 150ms; }
+.reveal:nth-child(2) { transition-delay: 300ms; }
+.reveal:nth-child(3) { transition-delay: 450ms; }
+.reveal:nth-child(4) { transition-delay: 600ms; }
+.reveal:nth-child(5) { transition-delay: 750ms; }
+.reveal:nth-child(6) { transition-delay: 900ms; }
+.reveal:nth-child(7) { transition-delay: 1050ms; }
+.reveal:nth-child(8) { transition-delay: 1200ms; }
+.reveal:nth-child(9) { transition-delay: 1350ms; }
+.reveal:nth-child(10) { transition-delay: 1500ms; }
+
+/* Fast Staggered Delays (75ms steps) */
+.reveal-fast:nth-child(1) { transition-delay: 75ms; }
+.reveal-fast:nth-child(2) { transition-delay: 150ms; }
+.reveal-fast:nth-child(3) { transition-delay: 225ms; }
+.reveal-fast:nth-child(4) { transition-delay: 300ms; }
+.reveal-fast:nth-child(5) { transition-delay: 375ms; }
+.reveal-fast:nth-child(6) { transition-delay: 450ms; }
+.reveal-fast:nth-child(7) { transition-delay: 525ms; }
+.reveal-fast:nth-child(8) { transition-delay: 600ms; }
+.reveal-fast:nth-child(9) { transition-delay: 675ms; }
+.reveal-fast:nth-child(10) { transition-delay: 750ms; }
+
+/* Handle Accessibility - Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-fast {
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

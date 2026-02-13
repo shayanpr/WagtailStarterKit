@@ -4,7 +4,7 @@
 {% block content %}
 <main class="py-20 bg-gray-50 min-h-screen">
     <div class="container mx-auto px-6 max-w-2xl">
-        <div class="bg-white p-10 rounded-2xl shadow-sm border border-gray-100">
+        <div class="bg-white p-10 rounded-2xl shadow-sm border border-gray-100 reveal">
             
             <h1 class="text-4xl font-bold tracking-tight mb-4">{{ page.title }}</h1>
             
@@ -14,17 +14,18 @@
                 </div>
             {% endif %}
 
-            <form action="{% pageurl page %}" method="POST" class="space-y-6">
+            <form action="{% pageurl page %}" method="POST" class="space-y-6 reveal">
                 {% csrf_token %}
                 
                 {% if form.non_field_errors %}
-                    <div class="p-4 bg-red-50 text-red-600 rounded-lg">
+                    <div class="p-4 bg-red-50 text-red-600 rounded-lg reveal">
                         {{ form.non_field_errors }}
                     </div>
                 {% endif %}
 
                 <div class="grid grid-cols-1 gap-6">
                     {% for field in form %}
+                        <div class="flex flex-col h-full reveal">
                         <div class="flex flex-col gap-2">
                             <label class="font-medium text-gray-700" for="{{ field.id_for_label }}">
                                 {{ field.label }}{% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
@@ -43,10 +44,11 @@
                                 <p class="text-sm text-red-500">{{ field.errors.0 }}</p>
                             {% endif %}
                         </div>
+                        </div>
                     {% endfor %}
                 </div>
 
-                <button type="submit" class="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-lg">
+                <button type="submit" class="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-lg reveal">
                     Send Message
                 </button>
             </form>

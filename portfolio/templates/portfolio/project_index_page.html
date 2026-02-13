@@ -6,11 +6,11 @@
 {# --- Header Section --- #}
 <div class="bg-gray-50 border-b border-gray-200">
     <div class="container mx-auto px-6 py-20 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-gray-900">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-gray-900 reveal">
             {{ page.title }}
         </h1>
         {% if page.intro %}
-            <div class="prose prose-lg mx-auto text-gray-600 max-w-2xl">
+            <div class="prose prose-lg mx-auto text-gray-600 max-w-2xl reveal">
                 {{ page.intro|richtext }}
             </div>
         {% endif %}
@@ -22,7 +22,7 @@
     
     {# 1. The Filter Bar #}
     {% if all_tags %}
-    <div class="flex flex-wrap justify-center gap-3 mb-16">
+    <div class="flex flex-wrap justify-center gap-3 mb-16 reveal">
         {# "All" Link #}
         <a href="{% pageurl page %}" 
            class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if not request.GET.tag %}bg-black text-white border-black{% else %}border-gray-200 text-gray-500 hover:border-black hover:text-black{% endif %}">
@@ -43,6 +43,7 @@
         
         {# Loop through the filtered 'projects' list from get_context #}
         {% for project in projects %}
+            <div class="flex flex-col h-full reveal-fast">
             <a href="{% pageurl project %}" class="group block bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
                 
                 {# Card Image #}
@@ -75,6 +76,7 @@
                     </h2>
                 </div>
             </a>
+        </div>
         {% empty %}
             <div class="col-span-full text-center py-20 text-gray-500">
                 <p class="text-xl">No projects found yet.</p>

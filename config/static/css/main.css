@@ -11,11 +11,16 @@
     transform: translateY(20px);
     transition: opacity 0.5s ease-out, transform 0.6s ease-out;
 }
+.reveal-right {
+    opacity: 0;
+    transform: translateX(40px); /* Start 40px to the right */
+    transition: all 1s cubic-bezier(0.2, 1, 0.3, 1);
+}
 
 /* Animation Active State */
 .revealed {
     opacity: 1 !important;
-    transform: translateY(0) !important;
+    transform: translate(0,0) scale(1) !important;
 }
 
 /* Standard Staggered Delays (150ms steps) */

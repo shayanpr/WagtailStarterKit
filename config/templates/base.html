@@ -55,7 +55,7 @@
     {% wagtailuserbar %}
 
     <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center reveal">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center reveal-right">
             <a href="/" class="flex items-center gap-2 text-xl font-bold tracking-tighter">
                 {% if settings.home.BrandingSettings.logo %}
                     {% image settings.home.BrandingSettings.logo height-40 as logo_img %}
@@ -64,9 +64,9 @@
                     {{ current_site.site_name| default:"PORTFOLIO"}}
                 {% endif %}
             </a>
-            <ul class="flex gap-8 reveal">
+            <ul class="flex gap-8 reveal-right">
                 {% for item in settings.home.NavigationSettings.menu_items %}
-                <li class="reveal-fast">
+                <li class="reveal-right">
                     <a href="{% if item.value.link_page %} {% pageurl item.value.link_page %}{% else %}{{ item.value.link_url }}{% endif %}"
                         class="text-gray-600 hover:text-black font-medium transition-colors">
                         {{item.value.title}}

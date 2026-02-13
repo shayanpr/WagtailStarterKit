@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     // Initial check for elements
-    const elements = document.querySelectorAll('.reveal, .reveal-fast');
+    const elements = document.querySelectorAll('[class*="reveal"]');
     elements.forEach(el => observer.observe(el));
 
     // Optional: Back to top button logic if you want to include it

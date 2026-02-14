@@ -9,10 +9,10 @@
             </h2>
         {% endif %}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <div class="flex flex-wrap justify-center gap-12 items-stretch">
             {% for member in self.team_members %}
 
-                <div class="flex flex-col h-full reveal">
+                <div class="reveal flex flex-col w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)]">
                 <div class="flex flex-col h-full items-center bg-gray-50 p-10 rounded-3xl border border-gray-100 hover:shadow-xl transition-all duration-300">
                     
                     {# Profile Image #}
@@ -45,7 +45,7 @@
 
                     {# Bio #}
                     {% if member.biography %}
-                        <p class="text-gray-600 text-center leading-relaxed mb-8 reveal">
+                        <p class="text-gray-600 text-center leading-relaxed mb-8 reveal flex-grow">
                             {{ member.biography }}
                         </p>
                     {% endif %}

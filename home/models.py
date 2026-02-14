@@ -6,6 +6,7 @@ from wagtail.fields import StreamField, RichTextField
 from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
 from wagtail.contrib.forms.models import AbstractEmailForm, AbstractFormField
+from wagtail.images.blocks import ImageChooserBlock
 from blocks.models import (
     ContactFormBlock,
     GridBlock,
@@ -164,12 +165,8 @@ class FlexPage(Page, BaseStreamBlockMixin):
 
 class AboutPage(Page, BaseStreamBlockMixin):
     hero_text = models.CharField(max_length=255, blank=True)
-    hero_image = models.ForeignKey(
-        "wagtailimages.Image",
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name="+",
+    hero_images = StreamField([
+        ("image", ImageChooserBlock())], blank=True, use_json_field=True
     )
 
     description = RichTextField(blank=True)
@@ -177,7 +174,7 @@ class AboutPage(Page, BaseStreamBlockMixin):
         MultiFieldPanel(
             [
                 FieldPanel("hero_text"),
-                FieldPanel("hero_image"),
+                FieldPanel("hero_images"),
                 FieldPanel("description"),
             ],
             heading="Hero Section",

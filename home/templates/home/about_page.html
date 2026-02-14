@@ -3,15 +3,31 @@
 
 {% block content %}
     {# Hero Section using Page Fields #}
-    <section class="relative bg-gray-900 text-white py-32 overflow-hidden">
-        {% if page.hero_image %}
-            <div class="absolute inset-0 z-0 opacity-70 ">
-                {% image page.hero_image fill-1920x800-c100 format-webp as bg_img %}
-                <img src="{{ bg_img.url }}" alt="{{ bg_img.alt }}" class="w-full h-full object-cover">
-            </div>
-        {% endif %}
+    <section class="relative bg-gray-900 text-white py-32 overflow-hidden min-h-[60vh] flex items-center">
+        
+        {# Cinematic Slideshow Container #}
+        <div class="hero-slideshow absolute inset-0 w-full h-full z-0 overflow-hidden" 
+             x-data="heroSlideshow({{ page.hero_images|length }})">
+            
+            {% for block in page.hero_images %}
+                <div class="hero-slide absolute inset-0 w-full h-full" 
+                     x-show="active === {{ forloop.counter0 }}"
+                     {% if not forloop.first %}style="display: none;"{% endif %}
+                     x-transition:enter="transition opacity-0 duration-1000"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition opacity-100 duration-1000"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0">
+                    {% image block.value fill-1920x1080 format-webp class="w-full h-full object-cover" %}
+                </div>
+            {% endfor %}
+            
+            {# Overlay to ensure text readability #}
+            <div class="absolute inset-0 z-10 bg-black/50"></div>
+        </div>
 
-        <div class="relative z-10 container mx-auto px-6 text-center ">
+        <div class="relative z-20 container mx-auto px-6 text-center">
             <h1 class="text-5xl md:text-7xl font-bold mb-8 tracking-tight reveal-fast">
                 {% if page.hero_text %}
                     {{ page.hero_text }}

@@ -6,11 +6,12 @@
                 {{self.heading}}
             </h2>
         {% endif %}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        {# Flexbox Grid: Centered with equal heights #}
+        <div class="flex flex-wrap justify-center gap-10 items-stretch">
             {% for service in self.services %}
-            <div class="flex flex-col h-full reveal">
-                {% include_block service %}
-            </div>
+                <div class="reveal flex flex-col w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)]">
+                    {% include_block service %}
+                </div>
             {% endfor %}
         </div>
     </div>

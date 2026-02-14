@@ -31,3 +31,21 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 });
+
+/**
+ * Hero Slideshow Component
+ * Handles dynamic image transitions for any number of images.
+ */
+document.addEventListener('alpine:init', () => {
+    Alpine.data('heroSlideshow', (totalImages) => ({
+        active: 0,
+        total: totalImages,
+        init() {
+            if (this.total > 1) {
+                setInterval(() => {
+                    this.active = (this.active + 1) % this.total;
+                }, 6000); // Transitions every 6 seconds
+            }
+        }
+    }));
+});

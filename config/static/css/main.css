@@ -25,34 +25,27 @@
 
 /* --- Cinematic Hero Slideshow --- */
 @keyframes kenburns {
-    0% { transform: scale(1); opacity: 0; }
-    5% { opacity: 1; }
-    95% { opacity: 1; }
-    100% { transform: scale(1.1); opacity: 0; }
-}
-
-@keyframes kenburns-single {
     0% { transform: scale(1); }
-    100% { transform: scale(1.1); }
+    100% { transform: scale(1.15); }
 }
 
 .hero-slideshow {
     position: absolute;
     inset: 0;
     z-index: 0;
+    overflow: hidden;
 }
 
 .hero-slide {
     position: absolute;
     inset: 0;
-    opacity: 0;
-    animation: kenburns 12s linear infinite;
 }
 
-/* Special logic for single images */
-.hero-slide:only-child {
-    opacity: 1 !important;
-    animation: kenburns-single 20s ease-in-out infinite alternate;
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    animation: kenburns 30s linear infinite alternate;
 }
 
 /* Standard Staggered Delays (150ms steps) */

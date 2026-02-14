@@ -23,6 +23,38 @@
     transform: translate(0,0) scale(1) !important;
 }
 
+/* --- Cinematic Hero Slideshow --- */
+@keyframes kenburns {
+    0% { transform: scale(1); opacity: 0; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { transform: scale(1.1); opacity: 0; }
+}
+
+@keyframes kenburns-single {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+.hero-slideshow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation: kenburns 12s linear infinite;
+}
+
+/* Special logic for single images */
+.hero-slide:only-child {
+    opacity: 1 !important;
+    animation: kenburns-single 20s ease-in-out infinite alternate;
+}
+
 /* Standard Staggered Delays (150ms steps) */
 .reveal:nth-child(1) { transition-delay: 150ms; }
 .reveal:nth-child(2) { transition-delay: 300ms; }

@@ -67,7 +67,12 @@ class ContactBlock(blocks.StructBlock):
 class HeroBlock(blocks.StructBlock):
     title = blocks.CharBlock(required=True, help_text="Main Headline")
     subtitle = blocks.TextBlock(required=False)
-    image = ImageChooserBlock(required=False)
+    images = blocks.ListBlock(
+        ImageChooserBlock(),
+        required=False,
+        label="Slideshow images",
+        help_text="Upload multiple images to create a cinematic background effect.",
+    )
 
     class Meta:
         icon = "user"

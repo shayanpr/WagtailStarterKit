@@ -1,15 +1,20 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<section class="relative bg-gray-900 text-white py-32 overflow-hidden">
-    {# This seems like a comment. #}
-    <div class="absolute inset-0 z-0 opacity-70">
-        {% if self.image %}
-            {% image self.image fill-1920x800-c100 format-webp as bg_img %}
-            <img src="{{ bg_img.url }}" alt="{{bg_img.alt}}" class="w-full h-full object-cover">
-        {% endif %}
+<section class="relative bg-gray-900 text-white py-32 overflow-hidden min-h-[60vh] flex items-center">
+    
+    {# Cinematic Slideshow Container #}
+    <div class="hero-slideshow">
+        {% for img in self.images %}
+            <div class="hero-slide" style="animation-delay: {{ forloop.counter0|add:forloop.counter0|add:forloop.counter0|add:forloop.counter0|add:forloop.counter0 }}s">
+                {% image img fill-1920x1080 format-webp class="w-full h-full object-cover" %}
+            </div>
+        {% endfor %}
+        
+        {# Overlay to ensure text readability #}
+        <div class="absolute inset-0 z-10 bg-black/50"></div>
     </div>
 
-    <div class="relative z-10 container mx-auto px-6 text-center reveal">
+    <div class="relative z-20 container mx-auto px-6 text-center">
         <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight reveal">
             {{self.title}}
         </h1>

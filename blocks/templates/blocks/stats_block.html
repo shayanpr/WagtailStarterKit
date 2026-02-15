@@ -1,10 +1,10 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<section class="py-24 bg-white">
+<section class="py-24 bg-white dark:bg-gray-950 transition-colors duration-300">
     <div class="container mx-auto px-6">
         
         {% if self.heading %}
-            <h2 class="text-4xl font-bold text-center mb-16 tracking-tight">
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tight text-gray-900 dark:text-white">
                 {{ self.heading }}
             </h2>
         {% endif %}
@@ -13,19 +13,19 @@
         <div class="flex flex-wrap lg:flex-nowrap justify-center gap-8 items-stretch">
             {% for item in self.stats %}
                 <div class="reveal flex flex-col w-full sm:w-1/2 md:w-1/3 lg:flex-1 min-w-[200px] max-w-sm">
-                    <div class="flex flex-col h-full items-center text-center p-10 bg-white rounded-3xl border border-gray-100 shadow-sm transition-all hover:shadow-lg hover:-translate-y-1">
+                    <div class="flex flex-col h-full items-center text-center p-10 bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm dark:shadow-none transition-all hover:shadow-lg dark:hover:border-blue-900 hover:-translate-y-1">
                         
                         {% if item.icon %}
-                            <div class="mb-8 w-20 h-20 rounded-3xl bg-blue-50 flex items-center justify-center reveal">
+                            <div class="mb-8 w-20 h-20 rounded-3xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center reveal">
                                 {% image item.icon fill-100x100 format-webp class="w-12 h-12 object-contain" %}
                             </div>
                         {% endif %}
 
-                        <div class="text-5xl font-extrabold text-blue-600 mb-2 reveal">
+                        <div class="text-5xl font-extrabold text-blue-600 dark:text-blue-400 mb-2 reveal">
                             {{ item.value }}
                         </div>
 
-                        <div class="text-sm font-bold uppercase tracking-widest text-gray-400 reveal">
+                        <div class="text-sm font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 reveal">
                             {{ item.text }}
                         </div>
                     </div>

@@ -1,10 +1,10 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<section class="py-24 relative overflow-hidden {% if self.is_dark %}bg-gray-900 text-white{% else %}bg-gray-50 text-gray-900{% endif %}">
+<section class="py-24 relative overflow-hidden transition-colors duration-300 {% if self.is_dark %}bg-gray-900 text-white{% else %}bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white{% endif %}">
     
     {# Optional Background Image #}
     {% if self.background_image %}
-        <div class="absolute inset-0 z-0 opacity-20">
+        <div class="absolute inset-0 z-0 opacity-20 dark:opacity-10">
             {% image self.background_image fill-1920x600 format-webp as bg_img %}
             <img src="{{ bg_img.url }}" alt="{{ bg_img.alt }}" class="w-full h-full object-cover">
         </div>
@@ -20,7 +20,7 @@
             {% endif %}
 
             {% if self.subtitle %}
-                <p class="text-xl {% if self.is_dark %}text-gray-400{% else %}text-gray-600{% endif %} mb-10 leading-relaxed reveal">
+                <p class="text-xl {% if self.is_dark %}text-gray-400{% else %}text-gray-600 dark:text-gray-400{% endif %} mb-10 leading-relaxed reveal">
                     {{ self.subtitle }}
                 </p>
             {% endif %}
@@ -32,7 +32,7 @@
                    {% if self.is_dark %}
                        bg-white text-gray-900 hover:bg-gray-200
                    {% else %}
-                       bg-blue-600 text-white hover:bg-blue-700
+                       bg-blue-600 dark:bg-white text-white dark:text-gray-900 hover:bg-blue-700 dark:hover:bg-gray-200
                    {% endif %}">
                     {{ self.button_text }}
                 </a>

@@ -1,41 +1,41 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<section class="py-24 bg-white">
+<section class="py-24 bg-white dark:bg-gray-950 transition-colors duration-300">
     <div class="container mx-auto px-6">
         
         {% if value.heading %}
-            <h2 class="text-4xl font-bold text-center mb-16 tracking-tight">{{ value.heading }}</h2>
+            <h2 class="text-4xl font-bold text-center mb-16 tracking-tight text-gray-900 dark:text-white">{{ value.heading }}</h2>
         {% endif %}
 
         {# Flexbox Grid: Centered with equal heights #}
         <div class="flex flex-wrap justify-center gap-12 items-stretch">
             {% for item in value.testimonials %}
                 <div class="reveal flex flex-col w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-2rem)]">
-                <div class="flex flex-col h-full bg-gray-50 p-10 rounded-3xl border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                <div class="flex flex-col h-full bg-gray-50 dark:bg-gray-900 p-10 rounded-3xl border border-gray-100 dark:border-gray-800 hover:shadow-xl dark:hover:border-blue-900 transition-all duration-300">
                     
                     {# Large Quote Icon #}
-                    <div class="text-blue-600 mb-6 opacity-20 reveal">
+                    <div class="text-blue-600 dark:text-blue-400 mb-6 opacity-20 reveal">
                         <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 32 32">
                             <path d="M10 8v8H6c0 4.418 3.582 8 8 8V28C7.373 28 2 22.627 2 16V8h8zm18 0v8h-4c0 4.418 3.582 8 8 8V28c-6.627 0-12-5.373-12-12V8h12z"></path>
                         </svg>
                     </div>
 
                     {# The Quote #}
-                    <blockquote class="flex-grow text-xl text-gray-700 leading-relaxed italic mb-10 reveal">
+                    <blockquote class="flex-grow text-xl text-gray-700 dark:text-gray-300 leading-relaxed italic mb-10 reveal">
                         "{{ item.quote }}"
                     </blockquote>
 
                     {# Author Info #}
-                    <div class="flex items-center gap-4 pt-8 border-t border-gray-200 reveal">
+                    <div class="flex items-center gap-4 pt-8 border-t border-gray-200 dark:border-gray-800 reveal">
                         {% if item.image %}
-                            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-md">
+                            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white dark:border-gray-800 shadow-md">
                                 {% image item.image fill-160x160 class="w-full h-full object-cover" %}
                             </div>
                         {% endif %}
                         
                         <div>
-                            <div class="font-bold text-gray-900">{{ item.author_name }}</div>
-                            <div class="text-sm text-gray-500">
+                            <div class="font-bold text-gray-900 dark:text-white">{{ item.author_name }}</div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">
                                 {{ item.author_role }}{% if item.company %}, {{ item.company }}{% endif %}
                             </div>
                         </div>

@@ -2,14 +2,14 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
-<main class="py-20 bg-gray-50 min-h-screen">
+<main class="py-20 bg-gray-50 dark:bg-gray-950 min-h-screen transition-colors duration-300">
     <div class="container mx-auto px-6 max-w-2xl">
-        <div class="bg-white p-10 rounded-2xl shadow-sm border border-gray-100 reveal">
+        <div class="bg-white dark:bg-gray-900 p-10 rounded-2xl shadow-sm dark:shadow-none border border-gray-100 dark:border-gray-800 reveal">
             
-            <h1 class="text-4xl font-bold tracking-tight mb-4">{{ page.title }}</h1>
+            <h1 class="text-4xl font-bold tracking-tight mb-4 text-gray-900 dark:text-white">{{ page.title }}</h1>
             
             {% if page.intro %}
-                <div class="text-gray-600 mb-8 prose">
+                <div class="text-gray-600 dark:text-gray-400 mb-8 prose dark:prose-invert">
                     {{ page.intro|richtext }}
                 </div>
             {% endif %}
@@ -18,7 +18,7 @@
                 {% csrf_token %}
                 
                 {% if form.non_field_errors %}
-                    <div class="p-4 bg-red-50 text-red-600 rounded-lg reveal">
+                    <div class="p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg reveal">
                         {{ form.non_field_errors }}
                     </div>
                 {% endif %}
@@ -27,7 +27,7 @@
                     {% for field in form %}
                         <div class="flex flex-col h-full reveal">
                         <div class="flex flex-col gap-2">
-                            <label class="font-medium text-gray-700" for="{{ field.id_for_label }}">
+                            <label class="font-medium text-gray-700 dark:text-gray-300" for="{{ field.id_for_label }}">
                                 {{ field.label }}{% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
                             </label>
                             
@@ -37,18 +37,18 @@
                             </div>
 
                             {% if field.help_text %}
-                                <p class="text-xs text-gray-400">{{ field.help_text }}</p>
+                                <p class="text-xs text-gray-400 dark:text-gray-500">{{ field.help_text }}</p>
                             {% endif %}
                             
                             {% if field.errors %}
-                                <p class="text-sm text-red-500">{{ field.errors.0 }}</p>
+                                <p class="text-sm text-red-500 dark:text-red-400">{{ field.errors.0 }}</p>
                             {% endif %}
                         </div>
                         </div>
                     {% endfor %}
                 </div>
 
-                <button type="submit" class="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-lg reveal">
+                <button type="submit" class="w-full bg-black dark:bg-white text-white dark:text-gray-900 py-4 rounded-xl font-bold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all shadow-lg reveal">
                     Send Message
                 </button>
             </form>
@@ -67,12 +67,29 @@
         border: 1px solid #e5e7eb;
         border-radius: 0.75rem;
         outline: none;
-        transition: border-color 0.2s;
+        transition: all 0.2s;
+        background-color: #ffffff;
+        color: #111827;
     }
+    
+    /* Dark Mode Overrides for Form Fields */
+    .dark .contact-field input, 
+    .dark .contact-field textarea, 
+    .dark .contact-field select {
+        background-color: #1f2937; /* gray-800 */
+        border-color: #374151;     /* gray-700 */
+        color: #f3f4f6;            /* gray-100 */
+    }
+
     .contact-field input:focus, 
     .contact-field textarea:focus {
-        border-color: #000;
-        ring: 1px #000;
+        border-color: #3b82f6; /* blue-500 */
+        ring: 2px #3b82f6;
+    }
+
+    .dark .contact-field input:focus, 
+    .dark .contact-field textarea:focus {
+        border-color: #60a5fa; /* blue-400 */
     }
 </style>
 {% endblock %}

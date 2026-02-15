@@ -1,16 +1,16 @@
 {% load wagtailcore_tags wagtailimages_tags %} 
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-gray-50 dark:bg-gray-950 transition-colors duration-300">
     <div class="container mx-auto px-6">
 
         {# Header #}
         <div class="text-center mb-16">
             {% if self.heading %}
-            <h2 class="text-4xl font-bold">
+            <h2 class="text-4xl font-bold text-gray-900 dark:text-white">
             {{self.heading}}
             </h2>
             {%endif%}
             {% if self.intro %}
-            <p class="text-gray-600">{{self.intro}}</p>
+            <p class="text-gray-600 dark:text-gray-400">{{self.intro}}</p>
             {%endif%}
         </div>
 
@@ -19,26 +19,26 @@
             {% for project in self.projects %}
             <div class="reveal-fast">
             {# 'project' is the Page object itself #}
-            <a href="{% pageurl project %}" class="group block bg-white rounded-3xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
+            <a href="{% pageurl project %}" class="group block bg-white dark:bg-gray-900 rounded-3xl shadow-sm dark:shadow-none hover:shadow-xl border border-transparent dark:border-gray-800 transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
                 {# Image #}
-                <div class="relative h-64 overflow-hidden bg-gray-200">
+                <div class="relative h-64 overflow-hidden bg-gray-200 dark:bg-gray-800">
                     {% if project.main_image %}
                         {% image project.main_image fill-800x600-c100 format-webp class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" %}
                     {% else %}
-                        <div class="flex items-center justify-center h-full text-gray-400">No Image</div>
+                        <div class="flex items-center justify-center h-full text-gray-400 dark:text-gray-500">No Image</div>
                     {% endif %}
                 </div>
                 {# Content #}
                 <div class="p-8">
                     <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold uppercase text-blue-600 tracking-widest">
+                        <span class="text-xs font-bold uppercase text-blue-600 dark:text-blue-400 tracking-widest">
                             {{ project.client|default:"Project" }}
                         </span>
                         {% if project.date %}
-                            <span class="text-xs text-gray-400">{{ project.date|date:"Y" }}</span>
+                            <span class="text-xs text-gray-400 dark:text-gray-500">{{ project.date|date:"Y" }}</span>
                         {% endif %}
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         {{ project.title }}
                     </h3>
                 </div>
@@ -49,7 +49,7 @@
 
         {# View All Link #}
         <div class="text-center mt-16 reveal">
-            <a href="/work/" class="inline-block px-8 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition-all transform hover:scale-105 shadow-md">
+            <a href="/work/" class="inline-block px-8 py-3 bg-black dark:bg-white text-white dark:text-gray-900 font-bold rounded-full hover:bg-gray-800 dark:hover:bg-gray-200 transition-all transform hover:scale-105 shadow-md">
                 View All Projects &rarr;
             </a>
         </div>

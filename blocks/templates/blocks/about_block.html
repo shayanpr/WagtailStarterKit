@@ -1,12 +1,12 @@
 {% load wagtailcore_tags %}
 
-<section class="py-20 bg-white text-gray-800">
+<section class="py-20 bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-100 transition-colors duration-300">
 
     <div class="container mx-auto px-6 max-w-4xl reveal">
-        <h2 class="text-3xl font-bold mb-8 border-l-4 border-blue-600 pl-4 reveal">
+        <h2 class="text-3xl font-bold mb-8 border-l-4 border-blue-600 pl-4 reveal text-gray-900 dark:text-white">
             {{self.heading}}
         </h2>
-        <div class="prose prose-lg text-gray-600 reveal">
+        <div class="prose prose-lg text-gray-600 dark:text-gray-400 reveal dark:prose-invert max-w-none">
             {{self.content | richtext }}
         </div>
     </div>

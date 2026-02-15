@@ -46,7 +46,7 @@
 - [x] **Cinematic Hero UI:** Dynamic Alpine.js slideshow with Ken Burns zoom effects.
 - [x] **Scroll Reveal System:** Project-wide Intersection Observer animations.
 - [x] **Spotlight Gallery:** Interactive grid gallery with modal/lightbox, navigation, and hi-res zoom.
-- [ ] **Dark Mode Support:** Ensure the base templates and blocks are compatible with Tailwind's dark mode.
+- [x] **Dark Mode Support:** Ensure the base templates and blocks are compatible with Tailwind's dark mode.
 - [x] **Branding & Analytics:**
     - [x] Integrate `BrandingSettings` (Logo/Favicon) into `base.html`.
     - [x] Add **Google Analytics ID** field to settings and auto-inject script.

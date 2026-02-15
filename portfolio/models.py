@@ -3,6 +3,7 @@ from wagtail import blocks
 from wagtail.models import Page, Orderable
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.images.blocks import ImageChooserBlock
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase, Tag
@@ -10,9 +11,17 @@ from blocks.models import CaseStudyBlock
 
 
 class ProjectIndexPage(Page):
+    hero_images = StreamField(
+        [
+            ("image", ImageChooserBlock()),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
     intro = RichTextField(blank=True)
 
     content_panels = Page.content_panels + [
+        FieldPanel("hero_images"),
         FieldPanel("intro", classname="Intro"),
     ]
 
@@ -65,12 +74,23 @@ class ProjectPage(Page):
         on_delete=models.SET_NULL,
         related_name="+",
     )
+    hero_images = StreamField(
+        [
+            ("image", ImageChooserBlock()),
+        ],
+        blank=True,
+        use_json_field=True,
+    )
     tags = ClusterTaggableManager(through=ProjectPageTag, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("client"),
         FieldPanel("date"),
-        FieldPanel("main_image"),
+        FieldPanel(
+            "main_image",
+            help_text="Thumbnail image used on the 'Our Work' list page, also works as a hero image if the hero_images field is not set.",
+        ),
+        FieldPanel("hero_images", help_text="Cinematic background slideshow images."),
         FieldPanel("body"),
         FieldPanel("tags"),
         InlinePanel("gallery_images", label="Gallery images"),

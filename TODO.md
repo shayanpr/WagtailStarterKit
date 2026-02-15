@@ -33,10 +33,13 @@
     - [ ] Add "Built with AI" statement to `README.md` without exposing internal prompts.
 
 ## ✨ Developer Experience (DX)
-- [ ] **Multi-language Support:** Integrate `wagtail-localize` for parallel translation trees.
+- [ ] **Multi-language Support:** Integrate `wagtail-localize` for global accessibility.
 - [x] **Migration Reset Strategy:** Clean up logic established for clean `0001_initial` releases.
 - [ ] **GitHub Template Config:** Finalize the repository as a GitHub Template.
 - [x] **Programmatic Seeding:** Robust `seed_data.py` script with image, settings, and recursive cleaning automation.
+
+## 🏗️ Real-World Testing
+- [ ] **Personal Portfolio Build:** Use this Starter Kit to build a live personal website to identify final UX refinements and battle-test the architecture.
 
 ## 🎨 Design & UI
 - [x] **Tailwind Components:** Expanded blocks with Grids, FAQs, Pricing, and Partners.

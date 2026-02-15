@@ -43,6 +43,11 @@
         {% endif %}
     {% endwith %}
     <script src="https://cdn.tailwindcss.com/?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script src="{% static 'js/main.js' %}" defer></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -51,12 +56,15 @@
     {% endblock %}
 </head>
 
-<body class="{% block body_class %}{% endblock %} font-sans antialiased text-gray-900">
+<body x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }"
+      x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
+      :class="{ 'dark': darkMode }"
+      class="{% block body_class %}{% endblock %} font-sans antialiased text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-950 transition-colors duration-300">
     {% wagtailuserbar %}
 
-    <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <header class="bg-white/80 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 sticky top-0 z-50 transition-colors duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center reveal-right">
-            <a href="/" class="flex items-center gap-2 text-xl font-bold tracking-tighter">
+            <a href="/" class="flex items-center gap-2 text-xl font-bold tracking-tighter text-gray-900 dark:text-white">
                 {% if settings.home.BrandingSettings.logo %}
                     {% image settings.home.BrandingSettings.logo height-40 as logo_img %}
                     <img src="{{ logo_img.url }}" alt="{{ current_site.site_name }}" class="h-10 w-auto">
@@ -64,19 +72,28 @@
                     {{ current_site.site_name| default:"PORTFOLIO"}}
                 {% endif %}
             </a>
-            <ul class="flex gap-8 reveal-right">
-                {% for item in settings.home.NavigationSettings.menu_items %}
-                <li class="reveal-right">
-                    <a href="{% if item.value.link_page %} {% pageurl item.value.link_page %}{% else %}{{ item.value.link_url }}{% endif %}"
-                        class="text-gray-600 hover:text-black font-medium transition-colors">
-                        {{item.value.title}}
-                    </a>
-                </li>
-                {% endfor %}
+            
+            <div class="flex items-center gap-8">
+                <ul class="flex gap-8 reveal-right">
+                    {% for item in settings.home.NavigationSettings.menu_items %}
+                    <li class="reveal-right">
+                        <a href="{% if item.value.link_page %} {% pageurl item.value.link_page %}{% else %}{{ item.value.link_url }}{% endif %}"
+                            class="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white font-medium transition-colors">
+                            {{item.value.title}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
 
-            </ul>
+                {# Dark Mode Toggle #}
+                <button @click="darkMode = !darkMode" 
+                        class="p-2 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all border border-gray-100 dark:border-gray-700 reveal-right"
+                        aria-label="Toggle Dark Mode">
+                    <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    <svg x-show="darkMode" style="display: none;" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 18v1m9-9h1M3 12H1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                </button>
+            </div>
         </nav>
-
     </header>
     {% block content %}{% endblock %}
 

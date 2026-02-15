@@ -63,18 +63,18 @@
         </div>
 
         {# Main Content: The Story #}
-        <div class="lg:col-span-8 lg:col-start-5">
+        <div class="lg:col-span-8 lg:col-start-5" x-data="{ spotlightOpen: false, activeIndex: 0, total: {{ page.gallery_images.count }} }">
             
             {# --- Gallery Grid (Orderables) --- #}
             {% if page.gallery_images.all %}
-                <div class="mb-20" x-data="{ spotlightOpen: false, activeImage: '' }">
+                <div class="mb-20">
                     <h3 class="text-2xl font-bold mb-10 text-gray-900">Project Gallery</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {% for item in page.gallery_images.all %}
                             <div class="reveal">
                             <figure class="cursor-pointer group relative overflow-hidden rounded-3xl border border-gray-100 shadow-sm transition-all hover:shadow-xl"
-                                    @click="spotlightOpen = true; activeImage = '{{ item.id }}'">
+                                    @click="spotlightOpen = true; activeIndex = {{ forloop.counter0 }}">
                                 
                                 {% image item.image fill-800x600 format-webp as thumb %}
                                 <img src="{{ thumb.url }}" alt="{{ item.caption }}" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
@@ -85,47 +85,14 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                                     </svg>
                                 </div>
-
-                                {% if item.caption %}
-                                    <figcaption class="sr-only">{{ item.caption }}</figcaption>
-                                {% endif %}
                             </figure>
                             </div>
                         {% endfor %}
                     </div>
-
-                    {# --- Spotlight Modal --- #}
-                    <div x-show="spotlightOpen" 
-                         x-transition.opacity.duration.300ms
-                         class="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-6"
-                         @keydown.escape.window="spotlightOpen = false"
-                         @click.away="spotlightOpen = false"
-                         style="display: none;">
-                        
-                        {# Close Button #}
-                        <button @click="spotlightOpen = false" class="absolute top-10 right-10 text-white/70 hover:text-white transition-colors">
-                            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                        </button>
-
-                        {# Image Container #}
-                        <div class="max-w-6xl w-full h-full flex flex-col justify-center items-center">
-                            {% for item in page.gallery_images.all %}
-                                <template x-if="activeImage === '{{ item.id }}'">
-                                    <div class="flex flex-col items-center">
-                                        {% image item.image width-1600 format-webp as full_img %}
-                                        <img src="{{ full_img.url }}" class="max-w-full max-h-[80vh] rounded-2xl shadow-2xl">
-                                        {% if item.caption %}
-                                            <p class="text-white/80 text-center mt-8 text-xl italic font-light">{{ item.caption }}</p>
-                                        {% endif %}
-                                    </div>
-                                </template>
-                            {% endfor %}
-                        </div>
-                    </div>
                 </div>
             {% endif %}
 
-            {# The Body Content (StreamField) - Moved below gallery #}
+            {# The Body Content (StreamField) #}
             <div class="mb-24 border-t border-gray-100 pt-16">
                 {% for block in page.body %}
                     {% if block.block_type == 'paragraph' %}
@@ -133,13 +100,68 @@
                             {{ block.value|richtext }}
                         </div>
                     {% else %}
-                        {# Specialized blocks like Case Study break out for more impact #}
                         <div class="-mx-6 md:-mx-12 mb-16 reveal">
                             {% include_block block %}
                         </div>
                     {% endif %}
                 {% endfor %}
             </div>
+
+            {# --- Spotlight Modal --- #}
+            <template x-teleport="body">
+                <div x-show="spotlightOpen" 
+                     x-transition.opacity.duration.500ms
+                     class="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-black/60 backdrop-blur-2xl cursor-zoom-out"
+                     @click.self="spotlightOpen = false"
+                     @keydown.escape.window="spotlightOpen = false"
+                     @keydown.right.window="activeIndex = (activeIndex + 1) % total"
+                     @keydown.left.window="activeIndex = (activeIndex - 1 + total) % total"
+                     style="display: none;">
+                    
+                    {# Close Button #}
+                    <button @click="spotlightOpen = false" class="absolute top-8 right-8 text-white/50 hover:text-white transition-all z-[110] cursor-pointer">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+
+                    {# Navigation Buttons #}
+                    <button @click="activeIndex = (activeIndex - 1 + total) % total" class="absolute left-4 md:left-10 text-white/30 hover:text-white transition-all p-4 hidden md:block z-[110] cursor-pointer">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+
+                    <button @click="activeIndex = (activeIndex + 1) % total" class="absolute right-4 md:right-10 text-white/30 hover:text-white transition-all p-4 hidden md:block z-[110] cursor-pointer">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+
+                    {# Image & Counter #}
+                    <div class="w-full max-w-6xl flex flex-col items-center cursor-default">
+                        {% for item in page.gallery_images.all %}
+                            <template x-if="activeIndex === {{ forloop.counter0 }}">
+                                <div class="flex flex-col items-center animate-in fade-in zoom-in duration-500">
+                                    {% image item.image width-1600 format-webp as full_img %}
+                                    {% image item.image original as original_img %}
+                                    
+                                    <a href="{{ original_img.url }}" target="_blank" class="cursor-zoom-in group/image relative block">
+                                        <img src="{{ full_img.url }}" class="max-w-full max-h-[75vh] rounded-2xl shadow-2xl border border-white/10 pointer-events-auto">
+                                        
+                                        {# Optional: Subtle "Open Original" hint on hover #}
+                                        <div class="absolute bottom-4 right-4 bg-black/50 backdrop-blur px-3 py-1 rounded-full text-[10px] text-white/70 opacity-0 group-hover/image:opacity-100 transition-opacity uppercase tracking-widest">
+                                            View Original
+                                        </div>
+                                    </a>
+                                    
+                                    {# Info Bar #}
+                                    <div class="mt-8 text-center">
+                                        <span class="text-white/40 text-xs font-bold uppercase tracking-[0.3em] mb-2 block" x-text="(activeIndex + 1) + ' / ' + total"></span>
+                                        {% if item.caption %}
+                                            <p class="text-white/90 text-lg md:text-xl font-light italic">{{ item.caption }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </template>
+                        {% endfor %}
+                    </div>
+                </div>
+            </template>
         </div>
     </div>
 

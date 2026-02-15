@@ -16,7 +16,7 @@
 - [x] **Trust & Social Proof:**
     - [x] **Testimonials Snippet:** Manage client quotes centrally and select them via `TestimonialBlock`.
     - [x] **Partner Logo Grid:** A "Trusted By" block for displaying client logos using `Partner` snippets.
-- [ ] **Sales & Service:**
+- [x] **Sales & Service:**
     - [x] **Global CTA:** A reusable "Call to Action" strip for the footer or page bottom.
     - [x] **Stats Block:** A grid of animated numbers (e.g., "99.9% Uptime", "10k Users").
 - [x] **Case Study Model:** A variation of `ProjectPage` focused on "Problem -> Solution -> ROI/Results".
@@ -40,6 +40,9 @@
 
 ## 🎨 Design & UI
 - [x] **Tailwind Components:** Expanded blocks with Grids, FAQs, Pricing, and Partners.
+- [x] **Cinematic Hero UI:** Dynamic Alpine.js slideshow with Ken Burns zoom effects.
+- [x] **Scroll Reveal System:** Project-wide Intersection Observer animations.
+- [x] **Spotlight Gallery:** Interactive grid gallery with modal/lightbox, navigation, and hi-res zoom.
 - [ ] **Dark Mode Support:** Ensure the base templates and blocks are compatible with Tailwind's dark mode.
 - [x] **Branding & Analytics:**
     - [x] Integrate `BrandingSettings` (Logo/Favicon) into `base.html`.

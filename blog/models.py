@@ -5,6 +5,9 @@ from wagtail.models import Page
 from wagtail.fields import StreamField, RichTextField
 from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
+from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from taggit.models import TaggedItemBase
 from blocks.models import (
     BlogGridBlock,
     TestimonialBlock,
@@ -19,6 +22,12 @@ from blocks.models import (
     ContactFormBlock,
     TeamMemberBlock,
 )
+
+
+class BlogPageTag(TaggedItemBase):
+    content_object = ParentalKey(
+        "BlogPage", related_name="tagged_items", on_delete=models.CASCADE
+    )
 
 
 class BlogStreamBlockMixin(models.Model):
@@ -86,17 +95,29 @@ class BlogPage(Page, BlogStreamBlockMixin):
         related_name="blog_pages",
     )
 
+    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     content_panels = Page.content_panels + [
         FieldPanel("date"),
         FieldPanel("intro"),
         FieldPanel("main_image"),
         FieldPanel("category"),
+        FieldPanel("tags"),
         FieldPanel("body"),
     ]
 
+
 class BlogIndexPage(Page):
+    hero_images = StreamField([
+        ("image", ImageChooserBlock())], blank=True, use_json_field=True
+    )
     intro = RichTextField(blank=True)
     content_panels = Page.content_panels + [
+        FieldPanel("hero_images"),
         FieldPanel("intro", classname="Intro"),
     ]
     subpage_types = ["blog.BlogPage"]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["posts"] = BlogPage.objects.child_of(self).live().order_by("-date")
+        return context

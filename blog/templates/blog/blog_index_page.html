@@ -17,7 +17,7 @@
 
         {# --- Blog List (One post per row) --- #}
         <div class="flex flex-col gap-8">
-            {% for post in page.get_children.live.specific %}
+            {% for post in posts %}
                 <div class="reveal-fast">
                     <a href="{% pageurl post %}" class="group block bg-white dark:bg-slate-800/50 rounded-3xl shadow-sm dark:shadow-none hover:shadow-xl border border-slate-200/50 dark:border-slate-800/50 transition-all duration-500 overflow-hidden transform hover:-translate-y-1">
                         

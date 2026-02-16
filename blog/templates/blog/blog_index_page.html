@@ -51,6 +51,40 @@
     {% endif %}
 
     <div class="container mx-auto px-6 pb-20 max-w-5xl">
+
+        {# --- 1. The Filter Bar (Two Rows) --- #}
+        <div class="flex flex-col items-center gap-8 mb-16 reveal">
+            
+            {# Row 1: Categories #}
+            <div class="flex flex-wrap justify-center gap-3">
+                {# "All" Link #}
+                <a href="{% pageurl page %}" 
+                   class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if not request.GET.tag and not request.GET.category %}bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900{% else %}border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-900 dark:hover:border-white hover:text-slate-900 dark:hover:text-white{% endif %}">
+                    All Posts
+                </a>
+
+                {% for cat in all_categories %}
+                    <a href="{% pageurl page %}?category={{ cat.slug }}" 
+                       class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if request.GET.category == cat.slug %}bg-slate-900 text-white border-slate-900 dark:bg-slate-100 dark:text-slate-900 dark:border-slate-100{% else %}border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-900 dark:hover:border-white hover:text-slate-900 dark:hover:text-white{% endif %}">
+                        {{ cat.name }}
+                    </a>
+                {% endfor %}
+            </div>
+
+            {# Row 2: Tags (Smaller, secondary pills) #}
+            {% if all_tags %}
+            <div class="flex flex-wrap justify-center gap-2 max-w-3xl">
+                {% for tag in all_tags %}
+                    <a href="{% pageurl page %}?tag={{ tag.slug }}" 
+                       class="px-4 py-1.5 rounded-full border text-xs font-bold transition-all {% if request.GET.tag == tag.slug %}bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20{% else %}border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-blue-600 hover:text-blue-600{% endif %}">
+                        #{{ tag.name }}
+                    </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        </div>
+
         {# --- Blog List (One post per row) --- #}
         <div class="flex flex-col gap-8">
             {% for post in posts %}

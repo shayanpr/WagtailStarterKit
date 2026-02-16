@@ -7,7 +7,7 @@ from wagtail import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase
+from taggit.models import TaggedItemBase, Tag
 from blocks.models import (
     BlogGridBlock,
     TestimonialBlock,
@@ -107,8 +107,8 @@ class BlogPage(Page, BlogStreamBlockMixin):
 
 
 class BlogIndexPage(Page):
-    hero_images = StreamField([
-        ("image", ImageChooserBlock())], blank=True, use_json_field=True
+    hero_images = StreamField(
+        [("image", ImageChooserBlock())], blank=True, use_json_field=True
     )
     intro = RichTextField(blank=True)
     content_panels = Page.content_panels + [
@@ -119,5 +119,24 @@ class BlogIndexPage(Page):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["posts"] = BlogPage.objects.child_of(self).live().order_by("-date")
+        all_posts = BlogPage.objects.child_of(self).live().order_by("-date")
+        tag = request.GET.get("tag")
+        if tag:
+            all_posts = all_posts.filter(tags__slug=tag)
+
+        category_slug = request.GET.get("category")
+        if category_slug:
+            all_posts = all_posts.filter(category__slug=category_slug)
+
+        context["posts"] = all_posts
+        context["all_tags"] = (
+            Tag.objects.filter(
+                blog_blogpagetag_items__content_object__in=BlogPage.objects.child_of(
+                    self
+                ).live()
+            )
+            .distinct()
+            .order_by("name")
+        )
+        context["all_categories"] = BlogCategory.objects.all()
         return context

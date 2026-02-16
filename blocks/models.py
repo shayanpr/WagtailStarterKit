@@ -384,3 +384,33 @@ class GridBlock(blocks.StructBlock):
         icon = "table"
         label = "Grid Section"
         template = "blocks/grid_block.html"
+
+class BlogColumnBlock(blocks.StreamBlock):
+    heading = blocks.CharBlock(icon="title")
+    paragraph = blocks.RichTextBlock(icon="pilcrow")
+    image = ImageChooserBlock(icon="image")
+    contact_form_block = ContactFormBlock(icon="mail")
+    testimonial_block = TestimonialBlock(icon="openquote")
+    service_block = ServiceBlock(icon="tick-inverse")
+    services_list_block = ServicesListBlock(icon="list-ul")
+    tier_block = TierBlock(icon="pick")
+    comparison_block = ComparisonBlock(icon="table")
+    faq_block = FAQBlock(icon="help")
+    team_member_block = TeamMemberBlock(icon="user")
+    stats_block = StatsBlock(icon="order")
+    cta_block = CallToActionBlock(icon="link")
+    case_study_block = CaseStudyBlock(icon="doc-full")
+    featured_projects_block = FeaturedProjectsBlock(icon="pick")
+
+    class Meta:
+        label = "Columns Content"
+
+
+class BlogGridBlock(blocks.StructBlock):
+    grid_title = blocks.CharBlock(required=False, help_text="Optional Section Heading.")
+    columns = blocks.ListBlock(BlogColumnBlock(), label="Columns", min_num=1, max_num=4)
+
+    class Meta:
+        icon = "table"
+        label = "Blog Grid Section"
+        template = "blocks/grid_block.html"

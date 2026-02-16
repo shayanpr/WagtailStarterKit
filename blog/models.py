@@ -93,3 +93,10 @@ class BlogPage(Page, BlogStreamBlockMixin):
         FieldPanel("category"),
         FieldPanel("body"),
     ]
+
+class BlogIndexPage(Page):
+    intro = RichTextField(blank=True)
+    content_panels = Page.content_panels + [
+        FieldPanel("intro", classname="Intro"),
+    ]
+    subpage_types = ["blog.BlogPage"]

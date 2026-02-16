@@ -3,9 +3,42 @@
 
 {% block content %}
 <div class="bg-slate-50 dark:bg-slate-900 transition-colors duration-300 min-h-screen">
-    <div class="container mx-auto px-6 py-20 max-w-5xl">
+
+    {# --- Header Section (Cinematic Upgrade) --- #}
+    {% if page.hero_images %}
+    <div class="relative bg-gray-900 dark:bg-black overflow-hidden flex items-center min-h-[40vh] md:min-h-[50vh] transition-colors duration-300 mb-12">
         
-        {# --- Header Section --- #}
+        {# Cinematic Slideshow Container #}
+        <div class="hero-slideshow absolute inset-0 w-full h-full z-0">
+            <div class="w-full h-full" x-data="heroSlideshow({{ page.hero_images|length }})">
+                {% for block in page.hero_images %}
+                    <div class="hero-slide absolute inset-0 w-full h-full" 
+                         x-show="active === {{ forloop.counter0 }}"
+                         {% if not forloop.first %}style="display: none;"{% endif %}
+                         x-transition.opacity.duration.1500ms>
+                        {% image block.value fill-1920x1080 format-webp class="w-full h-full object-cover opacity-60" %}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            {# Overlay #}
+            <div class="absolute inset-0 bg-black/40 z-10"></div>
+        </div>
+
+        <div class="relative z-20 container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-white reveal">
+                {{ page.title }}
+            </h1>
+            {% if page.intro %}
+                <div class="prose prose-lg mx-auto text-gray-200 dark:text-gray-300 max-w-2xl reveal dark:prose-invert">
+                    {{ page.intro|richtext }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+    {# --- Simple Header Section (If no Hero) --- #}
+    <div class="container mx-auto px-6 pt-20 max-w-5xl">
         <header class="mb-16 reveal">
             <h1 class="text-5xl font-bold mb-6 text-slate-900 dark:text-white">{{ page.title }}</h1>
             {% if page.intro %}
@@ -14,7 +47,10 @@
                 </div>
             {% endif %}
         </header>
+    </div>
+    {% endif %}
 
+    <div class="container mx-auto px-6 pb-20 max-w-5xl">
         {# --- Blog List (One post per row) --- #}
         <div class="flex flex-col gap-8">
             {% for post in posts %}
@@ -24,7 +60,7 @@
                         <div class="flex flex-col md:flex-row h-full">
                             
                             {# 1. Card Image (Left side on desktop) #}
-                            <div class="relative w-full md:w-72 h-48 md:h-auto overflow-hidden bg-slate-100 dark:bg-slate-800">
+                            <div class="relative w-full md:w-72 shrink-0 h-48 md:h-auto overflow-hidden bg-slate-100 dark:bg-slate-800">
                                 {% if post.main_image %}
                                     {% image post.main_image fill-800x600 format-webp class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" %}
                                 {% else %}

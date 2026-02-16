@@ -1,27 +1,86 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<article class="container mx-auto px-4 py-12 max-w-4xl">
-    <header class="mb-8">
-        <h1 class="text-5xl font-bold mb-4">{{ page.title }}</h1>
-        <p class="text-gray-500 mb-4">
-            <strong>Published on:</strong> {{ page.date }}
-        </p>
-        {% if page.category %}
-            <p class="text-sm">
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
-                    {{ page.category.name }}
-                </span>
-            </p>
-        {% endif %}
-        <p class="text-xl text-gray-600 italic mt-6 border-l-4 border-blue-500 pl-4">
-            {{ page.intro }}
-        </p>
-    </header>
+<article class="bg-white dark:bg-slate-900 transition-colors duration-300 min-h-screen pb-20">
     
-    <div class="prose prose-lg max-w-none dark:prose-invert">
-        {% include_block page.body %}
+    {# --- Post Header / Featured Image --- #}
+    <header class="relative w-full h-[50vh] md:h-[60vh] overflow-hidden bg-slate-900">
+        {% if page.main_image %}
+            {% image page.main_image fill-1920x1080 format-webp class="w-full h-full object-cover opacity-60" %}
+        {% endif %}
+        
+        {# Gradient Overlay for Text Legibility #}
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+
+        {# Title Content Over Image #}
+        <div class="absolute inset-0 flex items-end">
+            <div class="container mx-auto px-6 pb-12">
+                <div class="max-w-4xl reveal">
+                    {% if page.category %}
+                        <span class="inline-block bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full mb-6 shadow-lg">
+                            {{ page.category.name }}
+                        </span>
+                    {% endif %}
+                    
+                    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                        {{ page.title }}
+                    </h1>
+
+                    <div class="flex items-center gap-6 text-slate-300 text-sm font-medium">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            {{ page.date|date:"F d, Y" }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {# --- Main Article Body --- #}
+    <div class="container mx-auto px-6 -mt-10 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            
+            {# Intro Card #}
+            <div class="bg-white dark:bg-slate-800 p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200/50 dark:border-slate-700/50 mb-12 reveal-fast">
+                <p class="text-xl md:text-2xl text-slate-700 dark:text-slate-200 font-medium leading-relaxed italic border-l-4 border-blue-500 pl-6">
+                    {{ page.intro }}
+                </p>
+            </div>
+
+            {# Content #}
+            <div class="prose prose-lg md:prose-xl max-w-none dark:prose-invert prose-slate 
+                        prose-headings:text-slate-900 dark:prose-headings:text-white
+                        prose-a:text-blue-600 dark:prose-a:text-blue-400
+                        prose-img:rounded-3xl prose-img:shadow-lg
+                        reveal">
+                {% include_block page.body %}
+            </div>
+
+            {# Tags Footer #}
+            {% if page.tags.all %}
+                <div class="mt-20 pt-10 border-t border-slate-200 dark:border-slate-800 reveal">
+                    <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-6">Topics in this post</h3>
+                    <div class="flex flex-wrap gap-3">
+                        {% for tag in page.tags.all %}
+                            <a href="{% slugurl 'blog' %}?tag={{ tag.slug }}" class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 py-2 rounded-full text-sm font-medium hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-all">
+                                #{{ tag.name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            {# Navigation #}
+            <div class="mt-16 flex justify-center reveal">
+                <a href="{% slugurl 'blog' %}" class="flex items-center gap-2 text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 font-bold transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18"></path></svg>
+                    Back to Insights
+                </a>
+            </div>
+
+        </div>
     </div>
 </article>
 {% endblock %}

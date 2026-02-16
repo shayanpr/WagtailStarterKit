@@ -1,27 +1,79 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-<div class="container mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold mb-4">{{ page.title }}</h1>
-    <div class="prose max-w-none mb-8">
-        {{ page.intro|richtext }}
-    </div>
+<div class="bg-slate-50 dark:bg-slate-900 transition-colors duration-300 min-h-screen">
+    <div class="container mx-auto px-6 py-20 max-w-5xl">
+        
+        {# --- Header Section --- #}
+        <header class="mb-16 reveal">
+            <h1 class="text-5xl font-bold mb-6 text-slate-900 dark:text-white">{{ page.title }}</h1>
+            {% if page.intro %}
+                <div class="prose prose-lg dark:prose-invert text-slate-600 dark:text-slate-400">
+                    {{ page.intro|richtext }}
+                </div>
+            {% endif %}
+        </header>
 
-    <hr class="mb-8">
+        {# --- Blog List (One post per row) --- #}
+        <div class="flex flex-col gap-8">
+            {% for post in page.get_children.live.specific %}
+                <div class="reveal-fast">
+                    <a href="{% pageurl post %}" class="group block bg-white dark:bg-slate-800/50 rounded-3xl shadow-sm dark:shadow-none hover:shadow-xl border border-slate-200/50 dark:border-slate-800/50 transition-all duration-500 overflow-hidden transform hover:-translate-y-1">
+                        
+                        <div class="flex flex-col md:flex-row h-full">
+                            
+                            {# 1. Card Image (Left side on desktop) #}
+                            <div class="relative w-full md:w-72 h-48 md:h-auto overflow-hidden bg-slate-100 dark:bg-slate-800">
+                                {% if post.main_image %}
+                                    {% image post.main_image fill-800x600 format-webp class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" %}
+                                {% else %}
+                                    <div class="w-full h-full flex items-center justify-center text-slate-400 dark:text-slate-500">
+                                        <svg class="w-12 h-12 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    </div>
+                                {% endif %}
+                                
+                                {# Category Badge #}
+                                {% if post.category %}
+                                    <div class="absolute top-4 left-4">
+                                        <span class="bg-blue-600 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                            {{ post.category.name }}
+                                        </span>
+                                    </div>
+                                {% endif %}
+                            </div>
 
-    <div class="space-y-8">
-        {% for post in page.get_children.live.specific %}
-            <div class="border-b pb-8">
-                <h2 class="text-2xl font-semibold text-blue-600 hover:underline">
-                    <a href="{% pageurl post %}">{{ post.title }}</a>
-                </h2>
-                <p class="text-sm text-gray-500 mb-2">{{ post.date }}</p>
-                <p class="text-gray-700">{{ post.intro }}</p>
-            </div>
-        {% empty %}
-            <p>No blog posts yet.</p>
-        {% endfor %}
+                            {# 2. Card Content (Right side on desktop) #}
+                            <div class="p-8 flex-grow flex flex-col justify-center">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <span class="text-xs font-bold text-blue-600 dark:text-blue-400">
+                                        {{ post.date|date:"M d, Y" }}
+                                    </span>
+                                </div>
+                                
+                                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-4">
+                                    {{ post.title }}
+                                </h2>
+                                
+                                <p class="text-slate-600 dark:text-slate-400 line-clamp-2">
+                                    {{ post.intro }}
+                                </p>
+                            </div>
+
+                            {# 3. Arrow Indicator (Desktop only) #}
+                            <div class="hidden md:flex items-center px-8 text-slate-300 dark:text-slate-700 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                <svg class="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <div class="text-center py-20 text-slate-500 dark:text-slate-400">
+                    <p class="text-xl">No insights to share yet. Check back soon!</p>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

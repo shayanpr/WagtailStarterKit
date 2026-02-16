@@ -34,6 +34,7 @@
 
 ## ✨ Developer Experience (DX)
 - [ ] **Multi-language Support:** Integrate `wagtail-localize` for global accessibility.
+- [ ] **Translation Ready Templates:** Wrap all hardcoded UI strings in `{% trans %}` tags across all blocks and pages.
 - [x] **Migration Reset Strategy:** Clean up logic established for clean `0001_initial` releases.
 - [ ] **GitHub Template Config:** Finalize the repository as a GitHub Template.
 - [x] **Programmatic Seeding:** Robust `seed_data.py` script with image, settings, and recursive cleaning automation.

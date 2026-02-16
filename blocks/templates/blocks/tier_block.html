@@ -1,28 +1,28 @@
 {% load wagtailcore_tags %}
 {% load wagtailsettings_tags %}
                 <div class="flex flex-col h-full reveal">
-                <div class="flex flex-col h-full p-8 rounded-3xl border transition-all duration-300 {% if value.is_featured %} border-blue-600 ring-1 ring-blue-600 shadow-xl bg-white dark:bg-gray-800 scale-105 z-10 {% else %} border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 hover:bg-white dark:hover:bg-gray-800 hover:shadow-lg {% endif %}">
+                <div class="flex flex-col h-full p-8 rounded-3xl border transition-all duration-300 {% if value.is_featured %} border-blue-600 ring-1 ring-blue-600 shadow-xl bg-white dark:bg-slate-800 scale-105 z-10 {% else %} border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:bg-white dark:hover:bg-slate-800 hover:shadow-lg {% endif %}">
                     
                     {# value.Header #}
                     <div class="mb-8 reveal">
                         {% if value.is_featured %}
                             <span class="inline-block px-4 py-1 rounded-full bg-blue-600 text-white text-xs font-bold uppercase tracking-widest mb-4">Most Popular</span>
                         {% endif %}
-                        <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{{ value.name }}</h3>
+                        <h3 class="text-2xl font-bold mb-2 text-slate-900 dark:text-white">{{ value.name }}</h3>
                         {% if value.description %}
-                            <p class="text-gray-500 dark:text-gray-400 text-sm">{{ value.description }}</p>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm">{{ value.description }}</p>
                         {% endif %}
                     </div>
 
                     {# Value/Price #}
                     <div class="mb-8 reveal">
-                        <span class="text-4xl font-bold tracking-tighter text-gray-900 dark:text-white">{{ value.price_or_label }}</span>
+                        <span class="text-4xl font-bold tracking-tighter text-slate-900 dark:text-white">{{ value.price_or_label }}</span>
                     </div>
 
                     {# Feature List #}
                     <ul class="space-y-4 mb-10 flex-grow reveal">
                         {% for feature in value.features %}
-                            <li class="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400 reveal">
+                            <li class="flex items-start gap-3 text-sm text-slate-600 dark:text-slate-400 reveal">
                                 <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                 </svg>
@@ -34,7 +34,7 @@
                     {# CTA Button #}
                     {% if value.button_link %}
                     <div class="reveal">
-                        <a href="{% pageurl value.button_link %}" class="block text-center py-4 rounded-xl font-bold transition-all {% if value.is_featured %} bg-blue-600 text-white hover:bg-blue-700 {% else %} bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-black dark:text-white hover:border-black dark:hover:border-blue-500 {% endif %}">
+                        <a href="{% pageurl value.button_link %}" class="block text-center py-4 rounded-xl font-bold transition-all {% if value.is_featured %} bg-blue-600 text-white hover:bg-blue-700 {% else %} bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white hover:border-slate-900 dark:hover:border-blue-500 {% endif %}">
                             {{ value.button_text|default:"Get Started" }}
                         </a>
                     </div>

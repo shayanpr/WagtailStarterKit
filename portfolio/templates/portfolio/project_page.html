@@ -43,30 +43,30 @@
 </div>
 
 {# --- Content Container --- #}
-<article class="bg-white dark:bg-gray-950 transition-colors duration-300">
+<article class="bg-slate-100 dark:bg-slate-900 transition-colors duration-300">
     <div class="container mx-auto px-6 py-20">
         
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
             {# Sidebar: Meta Data #}
-            <div class="lg:col-span-3 lg:border-r border-gray-100 dark:border-gray-800 lg:pr-8 reveal">
+            <div class="lg:col-span-3 lg:border-r border-slate-200 dark:border-slate-800 lg:pr-8 reveal">
                 <div class="sticky top-10 space-y-8">
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Client</h3>
-                        <p class="text-lg font-medium text-gray-900 dark:text-white">{{ page.client|default:"-" }}</p>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2">Client</h3>
+                        <p class="text-lg font-medium text-slate-900 dark:text-white">{{ page.client|default:"-" }}</p>
                     </div>
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">Year</h3>
-                        <p class="text-lg font-medium text-gray-900 dark:text-white">{{ page.date|date:"F Y" }}</p>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2">Year</h3>
+                        <p class="text-lg font-medium text-slate-900 dark:text-white">{{ page.date|date:"F Y" }}</p>
                     </div>
 
                     {% if page.tags.all %}
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-3">Expertise</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-3">Expertise</h3>
                         <div class="flex flex-wrap gap-2">
                             {% for tag in page.tags.all %}
                                 <a href="{{ page.get_parent.url }}?tag={{ tag.slug }}" 
-                                   class="text-xs font-bold px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 rounded-full hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-gray-900 transition-all">
+                                   class="text-xs font-bold px-3 py-1 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-full hover:bg-slate-900 dark:hover:bg-slate-100 hover:text-white dark:hover:text-slate-900 transition-all">
                                     {{ tag.name }}
                                 </a>
                             {% endfor %}
@@ -75,7 +75,7 @@
                     {% endif %}
                     
                     {# Back Link #}
-                    <div class="pt-8 border-t border-gray-100 dark:border-gray-800">
+                    <div class="pt-8 border-t border-slate-200 dark:border-slate-800">
                         <a href="{{ page.get_parent.url }}" class="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:underline">
                             &larr; Back to Work
                         </a>
@@ -89,12 +89,12 @@
                 {# --- Gallery Grid --- #}
                 {% if page.gallery_images.all %}
                     <div class="mb-20">
-                        <h3 class="text-2xl font-bold mb-10 text-gray-900 dark:text-white">Project Gallery</h3>
+                        <h3 class="text-2xl font-bold mb-10 text-slate-900 dark:text-white">Project Gallery</h3>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {% for item in page.gallery_images.all %}
                                 <div class="reveal">
-                                <figure class="cursor-pointer group relative overflow-hidden rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm transition-all hover:shadow-xl dark:hover:border-blue-900"
+                                <figure class="cursor-pointer group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm transition-all hover:shadow-xl dark:hover:border-blue-900"
                                         @click="spotlightOpen = true; activeIndex = {{ forloop.counter0 }}">
                                     
                                     {% image item.image fill-800x600 format-webp as thumb %}
@@ -114,10 +114,10 @@
                 {% endif %}
 
                 {# The Body Content (StreamField) #}
-                <div class="mb-24 border-t border-gray-100 dark:border-gray-800 pt-16">
+                <div class="mb-24 border-t border-slate-200 dark:border-slate-800 pt-16">
                     {% for block in page.body %}
                         {% if block.block_type == 'paragraph' %}
-                            <div class="prose prose-lg md:prose-xl text-gray-600 dark:text-gray-400 max-w-none mb-8 reveal dark:prose-invert">
+                            <div class="prose prose-lg md:prose-xl text-slate-600 dark:text-slate-400 max-w-none mb-8 reveal dark:prose-invert">
                                 {{ block.value|richtext }}
                             </div>
                         {% else %}
@@ -187,10 +187,10 @@
 </article>
 
 {# --- Next Project Navigation (Bonus) --- #}
-<div class="bg-gray-50 dark:bg-gray-900 py-20 border-t border-gray-200 dark:border-gray-800 transition-colors duration-300">
+<div class="bg-slate-50 dark:bg-slate-900 py-20 border-t border-slate-200 dark:border-slate-800 transition-colors duration-300">
     <div class="container mx-auto px-6 text-center reveal">
-        <h3 class="text-sm font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-6 reveal">Want to see more?</h3>
-        <a href="{{ page.get_parent.url }}" class="inline-block px-8 py-4 bg-black dark:bg-white text-white dark:text-gray-900 font-bold rounded-full hover:bg-gray-800 dark:hover:bg-gray-200 transition-all shadow-lg hover:scale-105">
+        <h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-6 reveal">Want to see more?</h3>
+        <a href="{{ page.get_parent.url }}" class="inline-block px-8 py-4 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold rounded-full hover:bg-slate-800 dark:hover:bg-slate-200 transition-all shadow-lg hover:scale-105">
             View All Projects
         </a>
     </div>

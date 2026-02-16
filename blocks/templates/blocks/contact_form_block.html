@@ -1,12 +1,12 @@
 {% load wagtailcore_tags %}
 
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-transparent transition-colors duration-300">
     <div class="container mx-auto px-6 max-w-3xl reveal">
-        <div class="bg-white p-12 rounded-3xl shadow-sm border border-gray-100">
+        <div class="bg-white dark:bg-slate-900/50 p-12 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-800/50">
             
-            <h2 class="text-4xl font-bold tracking-tight mb-4 text-center">{{ value.heading }}</h2>
+            <h2 class="text-4xl font-bold tracking-tight mb-4 text-center text-slate-900 dark:text-white">{{ value.heading }}</h2>
             {% if value.description %}
-                <p class="text-gray-600 text-center mb-10">{{ value.description }}</p>
+                <p class="text-slate-600 dark:text-slate-400 text-center mb-10">{{ value.description }}</p>
             {% endif %}
 
             {# We point the action to the real ContactPage #}
@@ -17,24 +17,24 @@
                     {# We reach into the linked page and grab its fields #}
                     {% for field in value.form_page.form_fields.all %}
                         <div class="flex flex-col gap-2 reveal">
-                            <label class="font-medium text-gray-700">
+                            <label class="font-medium text-slate-700 dark:text-slate-300">
                                 {{ field.label }}{% if field.required %}<span class="text-red-500">*</span>{% endif %}
                             </label>
                             
                             <div class="contact-block-field">
                                 {% if field.field_type == 'multiline' %}
-                                    <textarea name="{{ field.clean_name }}" rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-black outline-none transition-all"></textarea>
+                                    <textarea name="{{ field.clean_name }}" rows="4" required class="w-full px-4 py-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:border-blue-500 outline-none transition-all"></textarea>
                                 {% elif field.field_type == 'checkbox' %}
-                                    <input type="checkbox" name="{{ field.clean_name }}" class="w-5 h-5">
+                                    <input type="checkbox" name="{{ field.clean_name }}" class="w-5 h-5 accent-blue-600">
                                 {% else %}
-                                    <input type="{{ field.field_type }}" name="{{ field.clean_name }}" required class="w-full px-4 py-3 rounded-xl border border-gray-100 focus:border-black outline-none transition-all">
+                                    <input type="{{ field.field_type }}" name="{{ field.clean_name }}" required class="w-full px-4 py-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:border-blue-500 outline-none transition-all">
                                 {% endif %}
                             </div>
                         </div>
                     {% endfor %}
                 </div>
 
-                <button type="submit" class="w-full bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-colors shadow-lg mt-8 reveal">
+                <button type="submit" class="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 py-4 rounded-xl font-bold hover:bg-slate-800 dark:hover:bg-slate-100 transition-all shadow-lg mt-8 reveal">
                     Send Message
                 </button>
             </form>
@@ -43,14 +43,10 @@
 </section>
 
 <style>
-    /* Styling to match your previous form aesthetics */
-    .contact-block-field input, 
-    .contact-block-field textarea {
-        background-color: #f9fafb;
-    }
+    /* Internal styles for specific focus behaviors if needed, 
+       but mostly handled by Tailwind above now. */
     .contact-block-field input:focus, 
     .contact-block-field textarea:focus {
-        background-color: #fff;
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
     }
 </style>

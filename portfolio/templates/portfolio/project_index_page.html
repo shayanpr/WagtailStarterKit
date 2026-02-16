@@ -38,7 +38,7 @@
 </div>
 
 {# --- Project Grid --- #}
-<div class="bg-white dark:bg-gray-950 transition-colors duration-300">
+<div class="bg-slate-100 dark:bg-slate-900 transition-colors duration-300">
     <div class="container mx-auto px-6 py-20">
         
         {# 1. The Filter Bar #}
@@ -46,14 +46,14 @@
         <div class="flex flex-wrap justify-center gap-3 mb-16 reveal">
             {# "All" Link #}
             <a href="{% pageurl page %}" 
-               class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if not request.GET.tag %}bg-black dark:bg-white text-white dark:text-gray-900 border-black dark:border-white{% else %}border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white{% endif %}">
+               class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if not request.GET.tag %}bg-slate-900 text-white border-slate-900 dark:bg-slate-100 dark:text-slate-900 dark:border-slate-100{% else %}border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-900 dark:hover:border-slate-100 hover:text-slate-900 dark:hover:text-white{% endif %}">
                 All Projects
             </a>
 
             {# Tag Links #}
             {% for tag in all_tags %}
                 <a href="{% pageurl page %}?tag={{ tag.slug }}" 
-                   class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if request.GET.tag == tag.slug %}bg-black dark:bg-white text-white dark:text-gray-900 border-black dark:border-white{% else %}border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white{% endif %}">
+                   class="px-6 py-2 rounded-full border text-sm font-bold transition-all {% if request.GET.tag == tag.slug %}bg-slate-900 text-white border-slate-900 dark:bg-slate-100 dark:text-slate-900 dark:border-slate-100{% else %}border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:border-slate-900 dark:hover:border-slate-100 hover:text-slate-900 dark:hover:text-white{% endif %}">
                     {{ tag.name }}
                 </a>
             {% endfor %}
@@ -65,15 +65,15 @@
             {# Loop through the filtered 'projects' list from get_context #}
             {% for project in projects %}
                 <div class="flex flex-col h-full reveal-fast">
-                <a href="{% pageurl project %}" class="group block bg-white dark:bg-gray-900 rounded-3xl shadow-sm dark:shadow-none hover:shadow-xl border border-transparent dark:border-gray-800 transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
+                <a href="{% pageurl project %}" class="group block bg-white dark:bg-slate-800/50 rounded-3xl shadow-sm dark:shadow-none hover:shadow-xl border border-slate-200/50 dark:border-slate-800/50 transition-all duration-500 overflow-hidden transform hover:-translate-y-2">
                     
                     {# Card Image #}
-                    <div class="relative h-64 overflow-hidden bg-gray-100 dark:bg-gray-800">
+                    <div class="relative h-64 overflow-hidden bg-slate-100 dark:bg-slate-800">
                         {% if project.main_image %}
                             {% image project.main_image fill-800x600 format-webp class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" %}
                         {% else %}
                             {# Placeholder if no image #}
-                            <div class="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
+                            <div class="w-full h-full flex items-center justify-center text-slate-400 dark:text-slate-500">
                                 No Image
                             </div>
                         {% endif %}
@@ -86,20 +86,20 @@
                                 {{ project.client|default:"Project" }}
                             </span>
                             {% if project.date %}
-                                <span class="text-xs text-gray-400 dark:text-gray-500">
+                                <span class="text-xs text-slate-400 dark:text-slate-500">
                                     {{ project.date|date:"Y" }}
                                 </span>
                             {% endif %}
                         </div>
                         
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                             {{ project.title }}
                         </h2>
                     </div>
                 </a>
             </div>
             {% empty %}
-                <div class="col-span-full text-center py-20 text-gray-500 dark:text-gray-400">
+                <div class="col-span-full text-center py-20 text-slate-500 dark:text-slate-400">
                     <p class="text-xl">No projects found yet.</p>
                 </div>
             {% endfor %}

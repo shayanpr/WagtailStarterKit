@@ -37,7 +37,7 @@ It is designed to be a "Golden Master" template—clean, generic, and modular.
 
 1.  **Install Dependencies:** `uv sync`
 2.  **Clean Slate Migration:** `uv run python manage.py makemigrations` and `migrate`.
-3.  **Seeding:** Use `uv run python manage.py run_seed` (requires `seed_data.py`).
+3.  **Seeding:** Use `uv run python manage.py run_seed` (requires `seed_data.py`, not available in the public version).
 4.  **Static Assets:** Main logic lives in `config/static/css/main.css` and `config/static/js/main.js`.
 
 ## Architectural Conventions

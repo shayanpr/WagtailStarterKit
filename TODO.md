@@ -5,10 +5,10 @@
 - [x] **Project Tagging:** Integrated `django-taggit` with smart filtering on `ProjectIndexPage`.
 - [x] **About Us Page:** Create a dedicated model for About pages.
     - [x] **Team Members:** Implement `TeamMember` snippet and a `TeamGridBlock`.
-- [ ] **Blog / News App:** Dedicated app for articles, updates, and tutorials.
-    - [ ] **Models:** `BlogIndexPage` (Listing) and `BlogPage` (Article).
-    - [ ] **Taxonomy:** Categories and Tags support.
-    - [ ] **Feeds:** RSS/Atom feed support.
+- [x] **Blog / News App:** Dedicated app for articles, updates, and tutorials.
+    - [x] **Models:** `BlogIndexPage` (Listing) and `BlogPage` (Article).
+    - [x] **Taxonomy:** Categories and Tags support.
+    - [ ] **Feeds:** RSS/Atom feed support (Private Repo only).
 
 ## 🏢 B2B / Corporate Features
 - [x] **Pricing/Comparison Tables:** Created dynamic `ComparisonBlock` with featured tier support.

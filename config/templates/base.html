@@ -147,8 +147,10 @@
             
             <div class="border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:row justify-between items-center gap-4 text-sm text-slate-400 dark:text-slate-500">
                 <p>© {% now "Y" %} {{ current_site.site_name| default:"Portfolio" }}. All rights reserved.</p>
-                <div class="flex gap-6">
-                    <span>Built with Wagtail CMS</span>
+                <div class="flex flex-col md:flex-row gap-4 md:gap-6 items-center text-xs">
+                    <span>Built with <a href="https://github.com/shayanpr/WagtailStarterKit" class="hover:text-slate-900 dark:hover:text-white transition-colors underline decoration-slate-300 dark:decoration-slate-700 underline-offset-4">Wagtail Starter Kit</a> by <a href="https://www.linkedin.com/in/khashayar-farshchi/" class="hover:text-slate-900 dark:hover:text-white transition-colors underline decoration-slate-300 dark:decoration-slate-700 underline-offset-4">KHASHAYAR FARSHCHI</a></span>
+                    <span class="hidden md:inline text-slate-300 dark:text-slate-700">|</span>
+                    <span>Powered by Wagtail CMS</span>
                 </div>
             </div>
         </div>

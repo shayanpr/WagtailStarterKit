@@ -1,6 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<section class="py-24 bg-white dark:bg-slate-900/50 border-y border-slate-200/50 dark:border-slate-800/50 transition-colors duration-300">
+<section class="py-24 bg-transparent transition-colors duration-300">
     <div class="container mx-auto px-6">
         
         {% if self.heading %}
@@ -13,7 +13,7 @@
         <div class="flex flex-wrap lg:flex-nowrap justify-center gap-8 items-stretch">
             {% for item in self.stats %}
                 <div class="reveal flex flex-col w-full sm:w-1/2 md:w-1/3 lg:flex-1 min-w-[200px] max-w-sm">
-                    <div class="flex flex-col h-full items-center text-center p-10 bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm dark:shadow-none transition-all hover:shadow-lg dark:hover:border-blue-900 hover:-translate-y-1">
+                    <div class="flex flex-col h-full items-center text-center p-10 bg-white dark:bg-gray-900 rounded-[2rem] border border-slate-200/60 dark:border-gray-800 shadow-sm dark:shadow-none transition-all hover:shadow-lg dark:hover:border-blue-900 hover:-translate-y-1">
                         
                         {% if item.icon %}
                             <div class="mb-8 w-20 h-20 rounded-3xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center reveal">

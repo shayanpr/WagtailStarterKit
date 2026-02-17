@@ -1,59 +1,19 @@
-# Wagtail Starter Kit - Roadmap & Ideas
+# Wagtail Starter Kit - Public Roadmap
 
-## 🚀 High Priority (Core Features)
-- [x] **Contact Page Model:** Implemented `AbstractEmailForm` with custom field builder.
-- [x] **Project Tagging:** Integrated `django-taggit` with smart filtering on `ProjectIndexPage`.
-- [x] **About Us Page:** Create a dedicated model for About pages.
-    - [x] **Team Members:** Implement `TeamMember` snippet and a `TeamGridBlock`.
-- [x] **Blog / News App:** Dedicated app for articles, updates, and tutorials.
-    - [x] **Models:** `BlogIndexPage` (Listing) and `BlogPage` (Article).
-    - [x] **Taxonomy:** Categories and Tags support.
-    - [ ] **Feeds:** RSS/Atom feed support (Private Repo only).
+## 🚀 Core Features (Completed)
+- [x] **Modular Block Library:** 15+ custom StreamField blocks including FAQ, Pricing, Team, and Stats.
+- [x] **Professional Portfolio:** Filterable project grid with Case Study support and cinematic galleries.
+- [x] **Pro Blog Engine:** Full taxonomy support (Categories & Tags) with editorial card layouts.
+- [x] **Dark Mode:** Project-wide theme toggle using Alpine.js and Tailwind CSS.
+- [x] **Cinematic UI:** Ken Burns slideshows and scroll-reveal animation system.
+- [x] **Branding & Analytics:** Centralized settings for logos, favicons, and Google Analytics.
 
-## 🏢 B2B / Corporate Features
-- [x] **Pricing/Comparison Tables:** Created dynamic `ComparisonBlock` with featured tier support.
-- [x] **FAQ Accordion:** Collapsible questions and answers using pure HTML/Tailwind.
-- [x] **Trust & Social Proof:**
-    - [x] **Testimonials Snippet:** Manage client quotes centrally and select them via `TestimonialBlock`.
-    - [x] **Partner Logo Grid:** A "Trusted By" block for displaying client logos using `Partner` snippets.
-- [x] **Sales & Service:**
-    - [x] **Global CTA:** A reusable "Call to Action" strip for the footer or page bottom.
-    - [x] **Stats Block:** A grid of animated numbers (e.g., "99.9% Uptime", "10k Users").
-- [x] **Case Study Model:** A variation of `ProjectPage` focused on "Problem -> Solution -> ROI/Results".
+## ✨ Future Enhancements (Community Goals)
+- [ ] **Accessibility Audit:** Ensure all components meet WCAG 2.1 AA standards.
+- [ ] **Unit Testing:** Implement a comprehensive test suite for models and views.
+- [ ] **Internationalization:** Setup `wagtail-localize` and wrap templates in `{% trans %}` tags.
+- [ ] **Performance Polish:** Fine-tune image lazy-loading and Alpine.js execution.
+- [ ] **Search Refinement:** Enhance the search results page with live-filtering.
 
-## 💼 Agency Operations (Public vs. Private)
-- [x] **Public Repo Cleanup:**
-    - [x] Add `gemini.md` to `.git/info/exclude`.
-    - [x] Run `git filter-repo` to purge `seed_data.py`, `content_data.py`, and `gemini.md` history.
-    - [x] Force-push cleaned history to public origin.
-- [ ] **Private Mirror Setup:**
-    - [ ] Create a dedicated private repository for full agency automation.
-    - [ ] Document the `git pull public main` workflow for syncing features.
-- [ ] **Public Documentation:**
-    - [ ] Add "Built with AI" statement to `README.md` without exposing internal prompts.
-
-## ✨ Developer Experience (DX)
-- [ ] **Multi-language Support:** Integrate `wagtail-localize` for global accessibility.
-- [ ] **Translation Ready Templates:** Wrap all hardcoded UI strings in `{% trans %}` tags across all blocks and pages.
-- [x] **Migration Reset Strategy:** Clean up logic established for clean `0001_initial` releases.
-- [ ] **GitHub Template Config:** Finalize the repository as a GitHub Template.
-- [x] **Programmatic Seeding:** Robust `seed_data.py` script with image, settings, and recursive cleaning automation.
-
-## 🏗️ Real-World Testing
-- [ ] **Personal Portfolio Build:** Use this Starter Kit to build a live personal website to identify final UX refinements and battle-test the architecture.
-
-## 🎨 Design & UI
-- [x] **Tailwind Components:** Expanded blocks with Grids, FAQs, Pricing, and Partners.
-- [x] **Cinematic Hero UI:** Dynamic Alpine.js slideshow with Ken Burns zoom effects.
-- [x] **Scroll Reveal System:** Project-wide Intersection Observer animations.
-- [x] **Spotlight Gallery:** Interactive grid gallery with modal/lightbox, navigation, and hi-res zoom.
-- [x] **Dark Mode Support:** Ensure the base templates and blocks are compatible with Tailwind's dark mode.
-- [x] **Branding & Analytics:**
-    - [x] Integrate `BrandingSettings` (Logo/Favicon) into `base.html`.
-    - [x] Add **Google Analytics ID** field to settings and auto-inject script.
-
-## 📦 Maintenance
-- [x] **Code Reorganization:** Moved blocks to a dedicated `blocks` app for better modularity.
-- [x] **Image Optimization:** Implemented WebP format and specific crops (fill/width) across all templates.
-- [ ] **Documentation:** Update `README.md` with instructions on how to use the new Form, Tagging, and Comparison features.
-- [x] **Search:** Implement a working search results page template.
+---
+*Note: Advanced distribution features like RSS feeds and Agency dashboards are managed in our private internal repository.*
